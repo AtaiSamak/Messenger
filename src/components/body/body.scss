@@ -1,0 +1,129 @@
+.body {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    padding: 16px 9px 0 16px;
+
+    &::-webkit-scrollbar {
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 7px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+}
+
+.user-message {
+    position: relative;
+    background-color: #007aff;
+    border-radius: 6px;
+    padding: 4px 8px;
+    max-width: 80%;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 16px;
+
+    &_first-message {
+        border-top-right-radius: 0;
+    }
+
+    &__top-vector-tip {
+        position: absolute;
+        top: -2.8px;
+        right: -7px;
+    }
+
+    &__text {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+
+        color: #ffffff;
+    }
+
+    &__time {
+        width: fit-content;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+
+        color: #ffffff;
+        text-align: end;
+    }
+
+    &__check-mark {
+        width: 16px;
+        height: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 4px;
+    }
+}
+
+.responder-message {
+    display: flex;
+    margin-bottom: 16px;
+    max-width: 80%;
+
+    &__image {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            height: 100%;
+        }
+    }
+
+    &__body {
+        position: relative;
+        background: #f2f2f7;
+        border-radius: 0px 6px 6px 6px;
+        padding: 4px 8px;
+        margin-left: 10px;
+    }
+
+    &__top-vector-tip {
+        position: absolute;
+        top: -2.9px;
+        left: -7px;
+    }
+
+    &__name {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        color: #2c2c2e;
+    }
+
+    &__text {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        color: #2c2c2e;
+    }
+
+    &__time {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color: #666668;
+        width: fit-content;
+        margin-left: auto;
+    }
+}
