@@ -1,27 +1,12 @@
 .app {
     position: fixed;
-    max-width: 656px;
+    max-width: 800px;
     width: 100%;
     top: 0;
     right: 0;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-
     background: #ffffff;
     box-shadow: inset 1px 0px 0px #e5e5ea;
-
-    &__body {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        margin-top: 69px;
-        margin-bottom: 48px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-    }
 }

@@ -1,0 +1,112 @@
+.contacts {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 25%;
+    width: 100%;
+    border-right: 1px solid #f2f2f7;
+
+    &_container {
+        padding: 0 12px;
+    }
+
+    &__body {
+        overflow-y: overlay;
+        height: 100%;
+
+        &::-webkit-scrollbar {
+            width: 7px;
+            display: none;
+            padding-left: 20px;
+        }
+
+        &:hover::-webkit-scrollbar {
+            display: block;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #d6dee1;
+            border-radius: 7px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+    }
+}
+
+.search-input {
+    display: block;
+    border: 2px solid transparent;
+    height: 36px;
+    width: 100%;
+    margin: 17px 0 15px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 4px;
+    outline: none;
+    background: #f2f2f7;
+    transition: all 0.1s linear;
+
+    &:focus {
+        border: 2px solid #4ca3ff;
+        background: inherit;
+    }
+
+    &::-webkit-input-placeholder {
+        font-family: inherit;
+    }
+
+    &:-ms-input-placeholder {
+        font-family: inherit;
+    }
+
+    &:-moz-placeholder {
+        font-family: inherit;
+    }
+
+    &::-moz-placeholder {
+        font-family: inherit;
+    }
+}
+
+.contact-item {
+    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background: #f2f2f7;
+    }
+
+    &__content {
+        padding-left: 10px;
+    }
+
+    &__name {
+        font-size: 15px;
+        font-weight: normal;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 120px; // some width
+    }
+
+    &__last-message {
+        font-size: 13px;
+        font-weight: normal;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 120px; // some width
+    }
+}

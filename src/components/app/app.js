@@ -1,21 +1,41 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import Chat from "../chat";
+import Auth from "../auth";
+import { MessageContext } from "../context";
+import getMessages from "../../utils/getMessages";
 import "./app.scss";
-import Header from "../header";
-import Body from "../body";
-import Footer from "../footer";
 
-class App extends Component {
-    render() {
-        return (
-            <div className="app">
-                <Header userInfo={this.props.userInfo} />
-                <div className="app__body">
-                    <Body />
-                    <Footer />
-                </div>
-            </div>
-        );
-    }
-}
+const App = (props) => {
+    const [isLogged, setIsLogged] = useState(false);
+    const [messageList, setMessageList] = useState(getMessages());
+
+    const onChangeIsLogged = (newStatus) => {
+        setIsLogged(newStatus);
+    };
+
+    const sendMessage = (text) => {
+        const currentTime = new Date();
+        const newMessage = {
+            user: "author",
+            text: text,
+            id: messageList.length + 1,
+            time: currentTime.getTime(),
+            isRead: false,
+        };
+        setMessageList([...messageList, newMessage]);
+    };
+
+    const chat = (
+        <div className="app">
+            <MessageContext.Provider value={{ sendMessage, messageList }}>
+                <Chat userInfo={props.userInfo} messageList={messageList} />
+            </MessageContext.Provider>
+        </div>
+    );
+
+    const auth = <Auth onChangeIsLogged={onChangeIsLogged} />;
+
+    return <> {isLogged ? chat : auth} </>;
+};
 
 export default App;

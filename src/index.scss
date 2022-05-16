@@ -1,0 +1,26 @@
+body {
+    background-color: #f2f2f7;
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+.photo {
+    height: 100%;
+    width: auto;
+}
