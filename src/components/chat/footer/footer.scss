@@ -47,3 +47,22 @@
         word-wrap: break-word;
     }
 }
+
+.emoji-picker-react .emoji-scroll-wrapper {
+    overflow-y: overlay;
+}
+
+.emoji-scroll-wrapper {
+    &::-webkit-scrollbar {
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 7px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+}

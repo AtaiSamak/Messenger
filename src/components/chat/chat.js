@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "./header";
 import Body from "./body";
 import Footer from "./footer";
 import Contacts from "./contacts";
+import { MessageContext } from "../context";
+import Greeting from "./greeting";
 import "./chat.scss";
 
-const Chat = ({ userInfo, messageList }) => {
+const Chat = () => {
     console.log("I'm chat");
+    const { responder } = useContext(MessageContext);
+
+    const content = (
+        <>
+            <Header />
+            <Body />
+            <Footer />
+        </>
+    );
+
     return (
         <>
             <Contacts />
-            <div className="chat">
-                <Header userInfo={userInfo} />
-                <div className="chat__body">
-                    <Body messageList={messageList} />
-                    <Footer />
-                </div>
-            </div>
+            <div className="chat">{responder ? content : <Greeting />}</div>
         </>
     );
 };

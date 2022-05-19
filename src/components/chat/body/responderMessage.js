@@ -1,4 +1,4 @@
-import { TopVectorTipResponderIcon } from "../../assets/svg";
+import { TopVectorTipResponderIcon } from "../../../assets/svg";
 
 const ResponderMessage = ({ name, imageSRC, message, time }) => {
     return (

@@ -2,7 +2,7 @@ import {
     MessageIsNotReadIcon,
     MessageIsReadIcon,
     TopVectorTipIcon,
-} from "../../assets/svg";
+} from "../../../assets/svg";
 
 const UserMessage = (props) => {
     const { message, time, isRead } = props;

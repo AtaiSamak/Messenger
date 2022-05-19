@@ -1,55 +1,106 @@
-.user {
-  display: flex;
-  justify-content: space-between;
-  padding: 17px 16px 15px;
-
-  border-bottom: 1px solid #f2f2f7;
-
-  &__photo {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-  }
-  
-  &__data {
-    text-align: center;
-  }
-  
-  &__name {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 18px;
-    color: #2c2c2e;
-  }
-  
-  &__last-seen {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-  
-    color: #666668;
-    margin-top: 4px;
-  }
-  
-  &__setting-button {
+.header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.1s linear;
-  }
-  
-  &__setting-button svg {
-    fill: #666668;
-    transition: all 0.1s linear;
-  }
-  
-  &__setting-button:hover svg {
-    fill: #000;
-  }
+    padding: 17px 16px 15px;
+    border-bottom: 1px solid #f2f2f7;
+
+    &__photo {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+
+    &__data {
+        text-align: center;
+    }
+
+    &__name {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        color: #2c2c2e;
+    }
+
+    &__last-seen {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+
+        color: #666668;
+        margin-top: 4px;
+    }
+
+    &__setting {
+        position: relative;
+    }
+
+    &__setting-button {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.1s linear;
+        color: inherit;
+        font-family: inherit;
+        border-radius: 50%;
+
+        &.active {
+            background-color: #f2f2f7;
+            svg {
+                fill: #000;
+            }
+        }
+    }
+
+    &__setting-button svg {
+        fill: #666668;
+        transition: all 0.1s linear;
+    }
+
+    &__setting-button:hover svg {
+        fill: #000;
+    }
+}
+
+.dropdown {
+    cursor: auto;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    width: 150px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 3px;
+    padding: 8px 0;
+    &__item {
+        font-size: 14px;
+        font-family: inherit;
+        text-align: left;
+        padding: 5px 10px;
+        cursor: pointer;
+        letter-spacing: 1.5;
+        transition: 0.1s background linear;
+        border: none;
+        outline: none;
+        width: 100%;
+
+        &:hover {
+            background-color: #f2f2f7;
+        }
+
+        span {
+            margin-left: 10px;
+        }
+        &_red-text {
+            color: #ff355e;
+        }
+    }
 }

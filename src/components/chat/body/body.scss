@@ -33,8 +33,13 @@
     }
 
     &__top-vector-tip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 10px;
+        height: 12px;
         position: absolute;
-        top: -2.8px;
+        top: 0;
         right: -7px;
     }
 
@@ -99,8 +104,13 @@
     }
 
     &__top-vector-tip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 10px;
+        height: 12px;
         position: absolute;
-        top: -2.9px;
+        top: 0px;
         left: -7px;
     }
 

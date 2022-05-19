@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
 import { MessageContext } from "../../context";
-import { EmojiIcon, TelegramIcon, MentionIcon } from "../../assets/svg";
+import { EmojiIcon, TelegramIcon, MentionIcon } from "../../../assets/svg";
 import { Button } from "../../common";
 import Picker from "emoji-picker-react";
 import "./footer.scss";
 
 const pickerStyle = {
     width: "100%",
-    position: "absolute",
-    bottom: "0",
-    zIndex: "10",
+    height: "100%",
 };
 
 const Footer = () => {
@@ -36,6 +34,7 @@ const Footer = () => {
     };
 
     const send = () => {
+        if (!inputValue) return;
         sendMessage(inputValue);
         clearInputValue();
     };
@@ -55,8 +54,8 @@ const Footer = () => {
             {pickerVisible ? picker : null}
             <div className="footer">
                 <Button
-                    classes={"footer__button "}
-                    handleClick={togglePickerVisible}
+                    className="footer__button"
+                    onClick={togglePickerVisible}
                 >
                     <EmojiIcon />
                 </Button>
@@ -68,12 +67,12 @@ const Footer = () => {
                     type="text"
                     onKeyUp={handleKeyUp}
                 />
-                <Button classes={"footer__button"}>
+                <Button className="footer__button">
                     <MentionIcon />
                 </Button>
                 <Button
-                    handleClick={send}
-                    classes={"footer__button footer__button_telegram"}
+                    onClick={send}
+                    className="footer__button footer__button_telegram"
                 >
                     <TelegramIcon />
                 </Button>
