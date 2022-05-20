@@ -1,12 +1,11 @@
-import React, { useContext, useState, Suspense, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { MessageContext } from "../../context";
 import { Img, Button } from "../../common";
 import { HeaderSettingIcon } from "../../../assets/svg";
 import getTimeSince from "../../../helpers/getTimeSince";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import Dropdown from "./dropdown.js";
 import "./header.scss";
-
-const Dropdown = React.lazy(() => import("./dropdown.js"));
 
 const Name = (props) => {
     const { name, lastSeen } = props;
@@ -35,11 +34,7 @@ const Header = () => {
 
     const { fullName, imageURL, lastSeen } = responder;
 
-    const dropdown = isDropdown ? (
-        <Suspense fallback={<div>loading</div>}>
-            <Dropdown ref={dropdownRef} />
-        </Suspense>
-    ) : null;
+    const dropdown = isDropdown ? <Dropdown ref={dropdownRef} /> : null;
 
     return (
         <header className="header">

@@ -1,50 +1,33 @@
-import { Component } from "react";
+import React, { useState } from "react";
 import "./input.scss";
 
-class Input extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isFocus: false,
-            inputValue: "",
-        };
-    }
+const Input = ({ className, placeholder, ...props }) => {
+    const [isFocus, setIsFocus] = useState(false);
 
-    onFocus = () => {
-        this.setState({ isFocus: true });
+    const onFocus = () => {
+        setIsFocus(true);
     };
 
-    onBlur = (el) => {
+    const onBlur = (el) => {
         if (el.target.value) {
             return;
         }
-        this.setState({ isFocus: false });
+        setIsFocus(false);
     };
 
-    render() {
-        const focusClass = `input__focus ${
-            this.state.isFocus ? "input__focus_active" : ""
-        }`;
-        const { placeholder, name, type, value, handleInput } = this.props;
+    const focusClass = `input__focus ${isFocus ? "input__focus_active" : ""}`;
 
-        return (
-            <div className="input">
-                <input
-                    className="input__field"
-                    type={type}
-                    name={name}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                    onChange={handleInput}
-                    value={value}
-                />
-                <span
-                    className={focusClass}
-                    data-placeholder={placeholder}
-                ></span>
-            </div>
-        );
-    }
-}
+    return (
+        <div className={"input" + (className ? ` ${className}` : "")}>
+            <input
+                className="input__field"
+                onFocus={onFocus}
+                onBlur={onBlur}
+                {...props}
+            />
+            <span className={focusClass} data-placeholder={placeholder}></span>
+        </div>
+    );
+};
 
 export default Input;

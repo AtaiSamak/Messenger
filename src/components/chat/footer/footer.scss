@@ -30,6 +30,10 @@
         &_telegram:hover svg {
             fill: #007aff;
         }
+
+        &.active svg {
+            fill: #2c2c2e;
+        }
     }
 
     &__input {

@@ -5,6 +5,10 @@
     border-bottom: 2px solid #adadad;
     margin-bottom: 37px;
 
+    &.invalid &__focus::after {
+        color: red;
+    }
+
     &__field {
         outline: none;
         border: none;

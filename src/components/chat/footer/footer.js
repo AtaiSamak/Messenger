@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import { MessageContext } from "../../context";
 import { EmojiIcon, TelegramIcon, MentionIcon } from "../../../assets/svg";
 import { Button } from "../../common";
-import Picker from "emoji-picker-react";
 import "./footer.scss";
+import Spinner from "../../common/spinner";
+
+const Picker = React.lazy(() => import("emoji-picker-react"));
 
 const pickerStyle = {
     width: "100%",
@@ -11,7 +13,6 @@ const pickerStyle = {
 };
 
 const Footer = () => {
-    console.log("I'm footer");
     const { sendMessage } = useContext(MessageContext);
     const [inputValue, setInputValue] = useState("");
     const [pickerVisible, setPickerVisible] = useState(false);
@@ -46,7 +47,9 @@ const Footer = () => {
     };
 
     const picker = (
-        <Picker pickerStyle={pickerStyle} onEmojiClick={onEmojiClick} />
+        <React.Suspense fallback={<Spinner />}>
+            <Picker pickerStyle={pickerStyle} onEmojiClick={onEmojiClick} />
+        </React.Suspense>
     );
 
     return (
@@ -54,7 +57,9 @@ const Footer = () => {
             {pickerVisible ? picker : null}
             <div className="footer">
                 <Button
-                    className="footer__button"
+                    className={
+                        "footer__button" + (pickerVisible ? " active" : "")
+                    }
                     onClick={togglePickerVisible}
                 >
                     <EmojiIcon />

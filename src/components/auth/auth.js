@@ -1,40 +1,61 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 import "./auth.scss";
 import Input from "./input";
 import Button from "./button";
 
-const Auth = (props) => {
+const Auth = ({ onChangeIsLogged }) => {
     const [state, setState] = useState({
-        status: false,
+        isCodeField: false,
         buttonText: "Send code",
         inputValue: "",
+        invalidCode: false,
     });
-    const { status, buttonText, inputValue } = state;
-    const { onChangeIsLogged } = props;
+    const { isCodeField, buttonText, inputValue, invalidCode } = state;
+    const buttonRef = useRef();
+
+    const setVerifyCodeState = () => {
+        setState({
+            isCodeField: true,
+            buttonText: "Verify",
+            inputValue: "",
+            invalidCode: false,
+        });
+    };
+
+    const setInvalidCodeState = () => {
+        setState({
+            isCodeField: true,
+            buttonText: "Verify",
+            inputValue: "",
+            invalidCode: true,
+        });
+    };
 
     const handleClick = (e) => {
         e.preventDefault();
-        if (status === true) {
+        if (isCodeField === true) {
+            setInvalidCodeState();
             onChangeIsLogged(true);
             return;
         }
-        setState({
-            status: true,
-            buttonText: "Verify",
-            inputValue: "",
-        });
+        setVerifyCodeState();
     };
 
     const handleInput = (e) => {
         const { value } = e.target;
-        setState({ status: status, buttonText: buttonText, inputValue: value });
+
+        setState({
+            ...state,
+            inputValue: value,
+            invalidCode: false,
+        });
     };
 
     const phoneField = (
         <Input
-            handleInput={handleInput}
+            onChange={handleInput}
             value={inputValue}
             placeholder={"Phone"}
             type={"tel"}
@@ -44,11 +65,12 @@ const Auth = (props) => {
 
     const codeField = (
         <Input
-            handleInput={handleInput}
+            onChange={handleInput}
             value={inputValue}
-            placeholder={"Code"}
+            placeholder={"Code" + (invalidCode ? " is incorrect" : "")}
             type={"text"}
             name={"code"}
+            className={invalidCode ? "invalid" : ""}
         />
     );
 
@@ -63,9 +85,11 @@ const Auth = (props) => {
                             icon={faTelegram}
                         />
                     </span>
-                    {status ? codeField : phoneField}
+                    {isCodeField ? codeField : phoneField}
                     <div className="button-container">
-                        <Button handleClick={handleClick}>{buttonText}</Button>
+                        <Button handleClick={handleClick} ref={buttonRef}>
+                            {buttonText}
+                        </Button>
                     </div>
                 </form>
             </div>

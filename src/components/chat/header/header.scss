@@ -80,6 +80,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 3px;
     padding: 8px 0;
+    z-index: 100;
     &__item {
         font-size: 14px;
         font-family: inherit;
