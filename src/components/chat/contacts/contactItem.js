@@ -1,21 +1,20 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Img } from "../../common";
 import { MessageContext } from "../../context";
 
-const ContactItems = ({ contacts }) => {
+const ContactItem = ({ userID, imageURL, fullName, lastMessage }) => {
     const { changeResponder, responder } = useContext(MessageContext);
 
     const isChoosenResponder = (userID) => {
         return responder && responder.userID === userID
-            ? " contact-item_active"
+            ? "contact-item_active"
             : "";
     };
 
-    return contacts.map(({ userID, imageURL, fullName, lastMessage }) => (
+    return (
         <div
             onClick={() => changeResponder(userID)}
-            className={`contact-item${isChoosenResponder(userID)}`}
-            key={userID}
+            className={`contact-item ${isChoosenResponder(userID)}`}
         >
             <Img
                 className={"contact-item__img"}
@@ -29,7 +28,7 @@ const ContactItems = ({ contacts }) => {
                 <div className="contact-item__last-message">{lastMessage}</div>
             </div>
         </div>
-    ));
+    );
 };
 
-export default ContactItems;
+export default ContactItem;

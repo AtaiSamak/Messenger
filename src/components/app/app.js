@@ -4,12 +4,12 @@ import Auth from "../auth";
 import { MessageContext } from "../context";
 import getMessages from "../../utils/getMessages";
 import getContact from "../../utils/getContact";
-import "./app.scss";
 
 const App = () => {
     const [isLogged, setIsLogged] = useState(false);
     const [messageList, setMessageList] = useState(getMessages());
     const [responder, setResponder] = useState(null);
+
     const onChangeIsLogged = (newStatus) => {
         setIsLogged(newStatus);
     };
@@ -29,19 +29,23 @@ const App = () => {
     const changeResponder = (userID) => {
         setResponder(getContact(userID));
     };
+
     const chat = (
-        <div className="app">
-            <MessageContext.Provider
-                value={{ sendMessage, messageList, responder, changeResponder }}
-            >
-                <Chat />
-            </MessageContext.Provider>
-        </div>
+        <MessageContext.Provider
+            value={{
+                sendMessage,
+                messageList,
+                responder,
+                changeResponder,
+            }}
+        >
+            <Chat />
+        </MessageContext.Provider>
     );
 
     const auth = <Auth onChangeIsLogged={onChangeIsLogged} />;
 
-    return <> {isLogged ? chat : auth} </>;
+    return <> {!isLogged ? chat : auth} </>;
 };
 
 export default App;

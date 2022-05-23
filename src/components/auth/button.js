@@ -1,5 +1,4 @@
 import React from "react";
-import "./button.scss";
 
 const Button = React.forwardRef(({ handleClick, children }, ref) => (
     <div onClick={handleClick} className="button">

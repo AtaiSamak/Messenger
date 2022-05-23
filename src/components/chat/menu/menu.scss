@@ -1,0 +1,120 @@
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: -45%;
+    bottom: 0;
+    width: 40%;
+    background-color: #fff;
+    z-index: 10000;
+    font-size: 16px;
+
+    &.active {
+        left: 0;
+        animation-duration: 0.5s;
+        animation-name: open-menu;
+    }
+
+    &.disable {
+        left: -45%;
+        animation-duration: 0.4s;
+        animation-name: close-menu;
+    }
+
+    &__list {
+        height: fit-content;
+        align-content: flex-start;
+        width: 100%;
+        margin: 10px 0;
+        flex-grow: 1;
+    }
+
+    &__footer {
+        width: 100%;
+        display: flex;
+        align-content: flex-end;
+        flex-wrap: wrap;
+        padding: 0 20px 15px;
+        font-size: 14px;
+        color: inherit;
+    }
+    &__app-name {
+        width: 100%;
+        font-weight: 600;
+    }
+    &__app-version {
+        width: 100%;
+        font-weight: 400;
+    }
+}
+
+.user-info {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0 20px;
+    border-bottom: 2px solid #f2f2f7;
+
+    &__data {
+        font-size: 16px;
+        margin-left: 20px;
+    }
+
+    &__phone-number {
+        font-size: 12px;
+    }
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f2f2f7;
+    }
+
+    &__icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+    }
+
+    &__text {
+        margin-left: 15px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+    }
+}
+
+@keyframes open-menu {
+    from {
+        left: -45%;
+    }
+
+    to {
+        left: 0;
+    }
+}
+
+@keyframes close-menu {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: -45%;
+    }
+}

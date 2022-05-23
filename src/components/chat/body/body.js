@@ -3,7 +3,6 @@ import Messages from "./messages";
 import "./body.scss";
 
 const Body = () => {
-    console.log("I'm body");
     const chatEndRef = React.createRef();
 
     useEffect(() => {

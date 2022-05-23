@@ -1,0 +1,81 @@
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation-duration: 0.4s;
+    animation-name: blackout;
+
+    &__main {
+        max-width: 300px;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 8px;
+        animation-duration: 0.4s;
+        animation-name: open-modal;
+    }
+
+    &__title {
+        display: flex;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-bottom: 1px solid #f2f2f7;
+
+        span {
+            flex-grow: 1;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            cursor: pointer;
+            padding: 0;
+
+            svg {
+                color: #8e8e93;
+                transition: 0.1s color linear;
+                width: 100%;
+                width: 13px;
+                height: 13px;
+            }
+
+            &:hover svg {
+                color: #2c2c2e;
+            }
+        }
+    }
+
+    &__content {
+        padding: 10px 20px;
+    }
+}
+
+@keyframes open-modal {
+    from {
+        margin-left: 150px;
+        width: 50%;
+        opacity: 0.5;
+    }
+
+    to {
+        margin: 0;
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes balckout {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

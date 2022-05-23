@@ -1,4 +1,5 @@
 import Button from "./button";
 import Img from "./img";
+import Expire from "./expire";
 
-export { Img, Button };
+export { Img, Button, Expire };

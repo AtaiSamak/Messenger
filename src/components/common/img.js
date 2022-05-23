@@ -1,6 +1,4 @@
-const Img = (props) => {
-    const { width, height, borderRadius = 0 } = props;
-
+const Img = ({ width, height, borderRadius = 0, url, ...props }) => {
     const styles = {
         width: width,
         height: height,
@@ -12,8 +10,8 @@ const Img = (props) => {
     };
 
     return (
-        <div className={props.className || ""} style={styles}>
-            <img className="photo" src={props.url} alt="UserPhoto" />
+        <div {...props} style={styles}>
+            <img className="photo" src={url} alt="UserPhoto" />
         </div>
     );
 };

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./input.scss";
 
 const Input = ({ className, placeholder, ...props }) => {
     const [isFocus, setIsFocus] = useState(false);

@@ -18,7 +18,6 @@ const Name = (props) => {
 };
 
 const Header = () => {
-    console.log("I'm header");
     const { responder } = useContext(MessageContext);
     const [isDropdown, setIsDropdown] = useState(false);
     const dropdownRef = useRef();

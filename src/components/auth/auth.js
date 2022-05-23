@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
-import "./auth.scss";
 import Input from "./input";
 import Button from "./button";
+import "./auth.scss";
 
 const Auth = ({ onChangeIsLogged }) => {
     const [state, setState] = useState({
