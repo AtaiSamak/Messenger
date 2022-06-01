@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
  - [getChat(friendPhoneNumber, setChat)](#getChat)
  - [getChatID(friendPhoneNumber)](#getChatID)
  - [getFriends()](#getFriends)
- - [getUserFromDB(phoneNumber)](#getUserFromDB(phoneNumber))
+ - [getUserFromDB(phoneNumber)](#getUserFromDB-phoneNumber)
  - [removeFriend(friendPhoneNumber)](#removeFriend)
  - [setChat(chatID, friendPhoneNumber)](#setChat)
  - [setMessage(chatID, message)](#setMessage)
