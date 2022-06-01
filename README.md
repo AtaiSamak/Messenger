@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
  - [getChat(friendPhoneNumber, setChat)](#getChat)
  - [getChatID(friendPhoneNumber)](#getChatID)
  - [getFriends()](#getFriends)
- - [getUserFromDB(phoneNumber)](#getUserFromDB(phoneNumber))
+ - [getUserFromDB(phoneNumber)](#getUserFromDB)
  - [removeFriend(friendPhoneNumber)](#removeFriend)
  - [setChat(chatID, friendPhoneNumber)](#setChat)
  - [setMessage(chatID, message)](#setMessage)
@@ -64,7 +64,7 @@ Gets friends from the database path `users/${phoneNumber}/friends`<br>
 Not arguments<br>
 Return value: `Array` - contains friends info<br> 
 
-#### `getUserFromDB(phoneNumber)`
+#### `getUserFromDB`
 Gets user info from the database path `users/${phoneNumber}/info`<br>
 Argument `phoneNumber` - phone number<br>
 Return value: `Object` - user info<br>
