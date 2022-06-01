@@ -3,20 +3,22 @@ import { MessageContext } from "../../context";
 import UserMessage from "./userMessage";
 import ResponderMessage from "./responderMessage";
 import getFormattedTime from "../../../helpers/getFormattedTime";
+import Greeting from "../greeting";
 
 const Messages = () => {
-    const { messageList } = useContext(MessageContext);
+    const { chat, user } = useContext(MessageContext);
+    const { messages } = chat;
 
-    const user = ({ text, time, isRead, id }) => (
+    const userItem = ({ text, time, isRead }) => (
         <UserMessage
             message={text}
             time={getFormattedTime(time)}
             isRead={isRead}
-            key={id}
+            key={time}
         />
     );
 
-    const responder = ({ text, time, id }) => (
+    const responderItem = ({ text, time }) => (
         <ResponderMessage
             name={"Alex"}
             imageSRC={
@@ -24,12 +26,18 @@ const Messages = () => {
             }
             message={text}
             time={getFormattedTime(time)}
-            key={id}
+            key={time}
         />
     );
 
-    return messageList.map((message) =>
-        message.user === "author" ? user(message) : responder(message)
+    return messages ? (
+        messages.map((message) =>
+            message.user === user.phoneNumber
+                ? userItem(message)
+                : responderItem(message)
+        )
+    ) : (
+        <Greeting>You didn't write to this person</Greeting>
     );
 };
 

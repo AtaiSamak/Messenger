@@ -1,0 +1,16 @@
+@mixin modal-button {
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #0073cf;
+    & + & {
+        margin-left: 10px;
+    }
+
+    &:hover {
+        background-color: rgba(0, 115, 207, 0.1);
+    }
+}

@@ -1,11 +1,9 @@
 import React from "react";
 
-const Greeting = () => {
+const Greeting = ({ children }) => {
     return (
         <div className="greeting">
-            <div className="greeting__text">
-                Select a chat to start messaging
-            </div>
+            <div className="greeting__text">{children}</div>
         </div>
     );
 };

@@ -18,7 +18,7 @@ const Name = (props) => {
 };
 
 const Header = () => {
-    const { responder } = useContext(MessageContext);
+    const { responder, friends, toggleChat } = useContext(MessageContext);
     const [isDropdown, setIsDropdown] = useState(false);
     const dropdownRef = useRef();
     const buttonRef = useRef();
@@ -31,9 +31,16 @@ const Header = () => {
         setIsDropdown(!isDropdown);
     };
 
-    const { fullName, imageURL, lastSeen } = responder;
+    const handleRemove = () => {
+        friends.remove(responder.phoneNumber);
+        setIsDropdown(false);
+        toggleChat(null);
+    };
 
-    const dropdown = isDropdown ? <Dropdown ref={dropdownRef} /> : null;
+    const { displayName, photoURL, lastSeen } = responder;
+    const dropdown = isDropdown ? (
+        <Dropdown ref={dropdownRef} removeFriend={handleRemove} />
+    ) : null;
 
     return (
         <header className="header">
@@ -41,9 +48,9 @@ const Header = () => {
                 width={"36px"}
                 height={"36px"}
                 borderRadius={"50%"}
-                url={imageURL}
+                url={photoURL}
             />
-            <Name name={fullName} lastSeen={getTimeSince(lastSeen)} />
+            <Name name={displayName} lastSeen={getTimeSince(lastSeen)} />
             <div className="header__setting">
                 <Button
                     onClick={toggleDropdown}

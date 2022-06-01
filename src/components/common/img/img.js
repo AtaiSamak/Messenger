@@ -11,7 +11,7 @@ const Img = ({ width, height, borderRadius = 0, url, ...props }) => {
 
     return (
         <div {...props} style={styles}>
-            <img className="photo" src={url} alt="UserPhoto" />
+            <img className="photo" src={url} alt="img" />
         </div>
     );
 };

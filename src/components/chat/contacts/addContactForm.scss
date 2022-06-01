@@ -1,0 +1,14 @@
+@import "../../../styles/button.scss";
+
+.add-contact {
+    padding-top: 10px;
+    &__footer {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    &__button {
+        @include modal-button;
+    }
+}

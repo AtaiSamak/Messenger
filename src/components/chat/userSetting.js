@@ -1,16 +1,17 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import updateUser from "../../firebase/updateUser";
 import { Button, Img } from "../common";
+import { ModalInput } from "../common";
+import { MessageContext } from "../context";
 import "./userSetting.scss";
-import UserSettingInput from "./userSettingInput";
 
-const UserSetting = ({ handleSubmit }) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [userPhoto, setUserPhoto] = useState(
-        "https://www.cnet.com/a/img/resize/529e22c1cf902837e010e980a1efe8be4173e3bc/2019/01/11/b251bf04-5bf8-469a-be8d-79489551460b/avatar-2009.jpg?auto=webp&fit=crop&height=675&width=1200"
-    );
+const UserSetting = ({ handleCancel }) => {
+    const { updateUserData, user } = useContext(MessageContext);
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
+    const [userPhoto, setUserPhoto] = useState(user.photoURL);
 
     const handleChangePhoto = ({ target }) => {
         const [newPhoto] = target.files;
@@ -19,8 +20,21 @@ const UserSetting = ({ handleSubmit }) => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const newUserPhoto = e.target.photo.files[0];
+        if (newUserPhoto) {
+            await updateUser.photoURL(newUserPhoto);
+        }
+        const update = await updateUser.displayName(firstName, lastName);
+        if (newUserPhoto || update) {
+            updateUserData();
+            handleCancel();
+        }
+    };
+
     return (
-        <form className="user-setting">
+        <form className="user-setting" onSubmit={handleSubmit}>
             <div className="user-setting__photo">
                 <Img
                     url={userPhoto}
@@ -31,23 +45,36 @@ const UserSetting = ({ handleSubmit }) => {
                 <input
                     type="file"
                     accept=".png, .jpg, .jpeg"
+                    name="photo"
                     onChange={handleChangePhoto}
                 ></input>
                 <FontAwesomeIcon icon={faCamera} />
             </div>
-            <UserSettingInput
+            <ModalInput
                 label="First name:"
                 value={firstName}
+                name="firstName"
                 setValue={setFirstName}
+                pattern={/^[a-z]+$/i}
             />
-            <UserSettingInput
+            <ModalInput
                 label="Last name:"
                 value={lastName}
+                name="lastName"
                 setValue={setLastName}
+                pattern={/^[a-z]+$/i}
             />
             <div className="user-setting__footer">
-                <Button className="user-setting__button">Cancel</Button>
-                <Button className="user-setting__button">Save</Button>
+                <Button
+                    className="user-setting__button"
+                    onClick={handleCancel}
+                    type="button"
+                >
+                    Cancel
+                </Button>
+                <Button className="user-setting__button" type="submit">
+                    Save
+                </Button>
             </div>
         </form>
     );

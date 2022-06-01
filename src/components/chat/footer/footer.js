@@ -3,7 +3,7 @@ import { MessageContext } from "../../context";
 import { EmojiIcon, TelegramIcon, MentionIcon } from "../../../assets/svg";
 import { Button } from "../../common";
 import "./footer.scss";
-import Spinner from "../../common/spinner";
+import Spinner from "../../common/spinner/spinner";
 
 const Picker = React.lazy(() => import("emoji-picker-react"));
 

@@ -7,15 +7,17 @@ import { MessageContext } from "../context";
 import Greeting from "./greeting";
 import Menu from "./menu";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { Expire } from "../common";
-import Modal from "../common/modal";
+import { Modal } from "../common";
 import UserSetting from "./userSetting";
 import "./chat.scss";
+import useModal from "../../hooks/useModal";
 
 const Chat = () => {
-    const { responder } = useContext(MessageContext);
-    const [menu, setMenu] = useState(true);
-    const [modal, setModal] = useState(false);
+    const { chat, handleSignOut } = useContext(MessageContext);
+    const [menu, setMenu] = useState(false);
+    const [modalVisible, openModal, closeModal] = useModal(() => {
+        setMenu(false);
+    });
     const menuRef = useRef();
     const barsRef = useRef();
 
@@ -23,48 +25,32 @@ const Chat = () => {
         if (menu) setMenu(false);
     });
 
-    const openModal = () => {
-        setModal(true);
-        setMenu(false);
-    };
-
-    const closeModal = () => {
-        setModal(false);
-    };
-
-    const content = (
-        <>
-            <Header />
-            <Body />
-            <Footer />
-        </>
-    );
-
-    const asideMenu = menu ? (
-        <>
-            <div className="chat_blackout"></div>
-            <Menu openModal={openModal} ref={menuRef} isActive={menu} />
-        </>
-    ) : (
-        <Expire delay="500">
-            <div className="chat_blackout disable"></div>
-            <Menu ref={menuRef} isActive={menu} />
-        </Expire>
-    );
-
     return (
         <div className="chat">
-            {asideMenu}
+            <Menu
+                active={menu}
+                openModal={openModal}
+                handleSignOut={handleSignOut}
+                ref={menuRef}
+            />
             <Modal
-                isActive={modal}
+                isActive={modalVisible}
                 handleClose={closeModal}
                 title={"Edit Profile"}
             >
-                <UserSetting></UserSetting>
+                <UserSetting handleCancel={closeModal}></UserSetting>
             </Modal>
             <Contacts setMenu={setMenu} ref={{ barsRef }} />
             <div className="chat__content">
-                {responder ? content : <Greeting />}
+                {chat ? (
+                    <>
+                        <Header />
+                        <Body />
+                        <Footer />
+                    </>
+                ) : (
+                    <Greeting>Select a chat to start messaging</Greeting>
+                )}
             </div>
         </div>
     );

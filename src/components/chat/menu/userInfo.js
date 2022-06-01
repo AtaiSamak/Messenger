@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Img } from "../../common";
+import { MessageContext } from "../../context";
 
 const UserInfo = () => {
+    const { user } = useContext(MessageContext);
+    const { displayName, phoneNumber, photoURL } = user;
     return (
         <div className="user-info">
             <Img
                 width={"56px"}
                 height={"56px"}
                 borderRadius={"50%"}
-                url={
-                    "https://variety.com/wp-content/uploads/2022/02/Screen-Shot-2022-05-09-at-10.04.13-AM.png?w=681&h=383&crop=1"
-                }
+                url={photoURL}
             ></Img>
             <div className="user-info__data">
-                <div className="user-info__name">Atai Samakov</div>
-                <div className="user-info__phone-number">+7999223344</div>
+                <div className="user-info__name">
+                    {displayName ? displayName : "Anonymous"}
+                </div>
+                <div className="user-info__phone-number">
+                    {phoneNumber ? phoneNumber : "Anonymous"}
+                </div>
             </div>
         </div>
     );

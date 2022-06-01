@@ -1,19 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 import Input from "./input";
 import Button from "./button";
+import recaptcha from "../../firebase/recaptcha";
 import "./auth.scss";
+import verifyCode from "../../firebase/verifyCode";
+import sendCode from "../../firebase/sendCode";
+import { RoundSpinner } from "../common";
 
-const Auth = ({ onChangeIsLogged }) => {
+const Auth = ({ updateUserData }) => {
     const [state, setState] = useState({
         isCodeField: false,
         buttonText: "Send code",
         inputValue: "",
         invalidCode: false,
     });
+    const [loading, setLoading] = useState(false);
     const { isCodeField, buttonText, inputValue, invalidCode } = state;
     const buttonRef = useRef();
+
+    useEffect(() => {
+        recaptcha(buttonRef);
+    }, []);
 
     const setVerifyCodeState = () => {
         setState({
@@ -33,14 +42,20 @@ const Auth = ({ onChangeIsLogged }) => {
         });
     };
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if (isCodeField === true) {
+            const user = await verifyCode(inputValue);
+            if (user) updateUserData();
+            setLoading(false);
             setInvalidCodeState();
-            onChangeIsLogged(true);
             return;
         }
-        setVerifyCodeState();
+        if (await sendCode(inputValue)) {
+            setLoading(false);
+            setVerifyCodeState();
+        }
     };
 
     const handleInput = (e) => {
@@ -85,7 +100,11 @@ const Auth = ({ onChangeIsLogged }) => {
                             icon={faTelegram}
                         />
                     </span>
-                    {isCodeField ? codeField : phoneField}
+                    {loading ? (
+                        <RoundSpinner />
+                    ) : (
+                        <>{isCodeField ? codeField : phoneField}</>
+                    )}
                     <div className="button-container">
                         <Button handleClick={handleClick} ref={buttonRef}>
                             {buttonText}

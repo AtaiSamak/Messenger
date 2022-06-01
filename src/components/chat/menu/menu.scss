@@ -12,11 +12,9 @@
     z-index: 10000;
     font-size: 16px;
 
-    &.active {
-        left: 0;
-        animation-duration: 0.5s;
-        animation-name: open-menu;
-    }
+    left: 0;
+    animation-duration: 0.5s;
+    animation-name: open-menu;
 
     &.disable {
         left: -45%;

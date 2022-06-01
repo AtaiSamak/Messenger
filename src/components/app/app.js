@@ -2,50 +2,35 @@ import React, { useState } from "react";
 import Chat from "../chat";
 import Auth from "../auth";
 import { MessageContext } from "../context";
-import getMessages from "../../utils/getMessages";
-import getContact from "../../utils/getContact";
+import useUser from "../../hooks/useUser";
+import useFriends from "../../hooks/useFriends";
+import useChat from "../../hooks/useChat";
 
 const App = () => {
-    const [isLogged, setIsLogged] = useState(false);
-    const [messageList, setMessageList] = useState(getMessages());
+    const [user, updateUserData, handleSignOut] = useUser();
     const [responder, setResponder] = useState(null);
+    const friends = useFriends(user);
 
-    const onChangeIsLogged = (newStatus) => {
-        setIsLogged(newStatus);
-    };
+    const chatProps = useChat({ user, setResponder, friends: friends.data });
+    const { loading: chatLoading, sendMessage, chat, toggleChat } = chatProps;
 
-    const sendMessage = (text) => {
-        const currentTime = new Date();
-        const newMessage = {
-            user: "author",
-            text: text,
-            id: messageList.length + 1,
-            time: currentTime.getTime(),
-            isRead: false,
-        };
-        setMessageList([...messageList, newMessage]);
-    };
-
-    const changeResponder = (userID) => {
-        setResponder(getContact(userID));
-    };
-
-    const chat = (
+    return (
         <MessageContext.Provider
             value={{
                 sendMessage,
-                messageList,
+                toggleChat,
+                chat,
+                chatLoading,
+                user,
+                updateUserData,
+                handleSignOut,
+                friends,
                 responder,
-                changeResponder,
             }}
         >
-            <Chat />
+            {user ? <Chat /> : <Auth updateUserData={updateUserData} />}
         </MessageContext.Provider>
     );
-
-    const auth = <Auth onChangeIsLogged={onChangeIsLogged} />;
-
-    return <> {!isLogged ? chat : auth} </>;
 };
 
 export default App;

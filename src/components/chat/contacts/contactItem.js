@@ -1,31 +1,39 @@
 import React, { useContext } from "react";
 import { Img } from "../../common";
 import { MessageContext } from "../../context";
+import userDefaultPoto from "../../../assets/userDefaultPhoto.png";
 
-const ContactItem = ({ userID, imageURL, fullName, lastMessage }) => {
-    const { changeResponder, responder } = useContext(MessageContext);
+const ContactItem = ({
+    phoneNumber,
+    displayName,
+    phototURL = userDefaultPoto,
+}) => {
+    const { toggleChat, responder } = useContext(MessageContext);
 
-    const isChoosenResponder = (userID) => {
-        return responder && responder.userID === userID
+    const isChoosenResponder =
+        responder && responder.phoneNumber === phoneNumber
             ? "contact-item_active"
             : "";
+
+    const handleClick = () => {
+        toggleChat(phoneNumber);
     };
 
     return (
         <div
-            onClick={() => changeResponder(userID)}
-            className={`contact-item ${isChoosenResponder(userID)}`}
+            onClick={handleClick}
+            className={`contact-item ${isChoosenResponder}`}
         >
             <Img
                 className={"contact-item__img"}
                 width={"42px"}
                 height={"42px"}
                 borderRadius={"50%"}
-                url={imageURL}
+                url={phototURL}
             ></Img>
             <div className="contact-item__content">
-                <div className="contact-item__name">{fullName}</div>
-                <div className="contact-item__last-message">{lastMessage}</div>
+                <div className="contact-item__name">{displayName}</div>
+                <div className="contact-item__last-message">{}</div>
             </div>
         </div>
     );

@@ -1,7 +1,8 @@
 const getFoundContacts = (searchValue, contacts) => {
+    if (!contacts) return [];
     return contacts.filter(
         (contact) =>
-            contact.fullName
+            contact.displayName
                 .toLowerCase()
                 .indexOf(searchValue.toLowerCase()) !== -1
     );

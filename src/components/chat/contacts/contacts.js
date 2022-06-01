@@ -1,33 +1,26 @@
-import React, { useMemo, useState } from "react";
-import getContacts from "../../../utils/getContacts";
-import ContactItem from "./contactItem";
+import React, { useContext, useState } from "react";
 import SearchInput from "./searchInput";
-import getFoundContacts from "../../../helpers/getFoundContacts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import AddContactForm from "./addContactForm";
+import { Modal } from "../../common";
+import useModal from "../../../hooks/useModal";
 import "./contacts.scss";
+import ContactList from "./contactList";
+import { MessageContext } from "../../context";
 
 const Contacts = React.forwardRef(({ setMenu }, { barsRef }) => {
     const [inputValue, setInputValue] = useState("");
-    const [contacts] = useState(getContacts());
+    const [modalVisible, openModal, closeModal] = useModal();
+    const { friends } = useContext(MessageContext);
 
-    const foundContacts = useMemo(
-        () => getFoundContacts(inputValue, contacts),
-        [contacts, inputValue]
-    );
-
-    const onChangeInput = (e) => {
-        const { value } = e.target;
-        setInputValue(value);
+    const onChangeInput = ({ target }) => {
+        setInputValue(target.value);
     };
 
     const openMenu = () => {
         setMenu(true);
     };
-
-    const contactItems = foundContacts.map((contact) => (
-        <ContactItem {...contact} key={contact.userID}></ContactItem>
-    ));
 
     return (
         <div className="contacts">
@@ -45,10 +38,22 @@ const Contacts = React.forwardRef(({ setMenu }, { barsRef }) => {
                 </button>
                 <SearchInput value={inputValue} handleChange={onChangeInput} />
             </div>
-            <div className="contacts__body">{contactItems}</div>
-            <div className="contacts__add-button">
-                <button>Add contact</button>
+            <div className="contacts__body">
+                <ContactList inputValue={inputValue} friends={friends} />
             </div>
+            <div className="contacts__add-button" onClick={openModal}>
+                <button type="button">Add contact</button>
+            </div>
+            <Modal
+                isActive={modalVisible}
+                handleClose={closeModal}
+                title="Add contact"
+            >
+                <AddContactForm
+                    handleClose={closeModal}
+                    addFriend={friends.add}
+                />
+            </Modal>
         </div>
     );
 });
