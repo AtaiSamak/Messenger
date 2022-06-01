@@ -64,7 +64,7 @@ Gets friends from the database path `users/${phoneNumber}/friends`<br>
 Not arguments<br>
 Return value: `Array` - contains friends info<br> 
 
-#### `getUserFromDB`
+#### `getUserFromDB(phoneNumber)`
 Gets user info from the database path `users/${phoneNumber}/info`<br>
 Argument `phoneNumber` - phone number<br>
 Return value: `Object` - user info<br>
