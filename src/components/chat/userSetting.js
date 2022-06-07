@@ -2,16 +2,19 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import updateUser from "../../firebase/updateUser";
+import getDividedDisplayName from "../../helpers/getDividedDisplayName";
 import { Button, Img } from "../common";
 import { ModalInput } from "../common";
 import { MessageContext } from "../context";
 import "./userSetting.scss";
 
 const UserSetting = ({ handleCancel }) => {
-    const { updateUserData, user } = useContext(MessageContext);
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
-    const [userPhoto, setUserPhoto] = useState(user.photoURL);
+    const { user } = useContext(MessageContext);
+    const photoURL = user.data && user.data.photoURL;
+    const dName = getDividedDisplayName(user.data && user.data.displayName);
+    const [userPhoto, setUserPhoto] = useState(photoURL);
+    const [firstName, setFirstName] = useState(dName[0]);
+    const [lastName, setLastName] = useState(dName[1]);
 
     const handleChangePhoto = ({ target }) => {
         const [newPhoto] = target.files;
@@ -28,7 +31,7 @@ const UserSetting = ({ handleCancel }) => {
         }
         const update = await updateUser.displayName(firstName, lastName);
         if (newUserPhoto || update) {
-            updateUserData();
+            user.update();
             handleCancel();
         }
     };

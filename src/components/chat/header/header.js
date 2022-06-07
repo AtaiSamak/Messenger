@@ -7,39 +7,58 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import Dropdown from "./dropdown.js";
 import "./header.scss";
 
-const Name = (props) => {
-    const { name, lastSeen } = props;
+const Name = ({ name, lastSeen }) => {
     return (
         <div className="header__data">
             <div className="header__name">{name}</div>
-            <div className="header__last-seen">last seen {lastSeen} ago</div>
+            <div
+                className={`header__status${
+                    lastSeen === "online" ? " header__status_online" : ""
+                }`}
+            >
+                {lastSeen}
+            </div>
         </div>
     );
 };
 
 const Header = () => {
-    const { responder, friends, toggleChat } = useContext(MessageContext);
     const [isDropdown, setIsDropdown] = useState(false);
     const dropdownRef = useRef();
     const buttonRef = useRef();
+    const { responder, friends, chat } = useContext(MessageContext);
+    const { displayName, photoURL, lastSeen } = responder;
+
+    const status =
+        responder && responder.connections
+            ? "online"
+            : `last seen ${getTimeSince(lastSeen)} ago`;
 
     useOutsideClick(dropdownRef, buttonRef, () => {
         toggleDropdown();
     });
 
-    const toggleDropdown = (e) => {
+    const toggleDropdown = () => {
         setIsDropdown(!isDropdown);
     };
 
     const handleRemove = () => {
         friends.remove(responder.phoneNumber);
         setIsDropdown(false);
-        toggleChat(null);
+        chat.toggle(null);
     };
 
-    const { displayName, photoURL, lastSeen } = responder;
+    const handleClear = () => {
+        setIsDropdown(false);
+        chat.clearHistory();
+    };
+
     const dropdown = isDropdown ? (
-        <Dropdown ref={dropdownRef} removeFriend={handleRemove} />
+        <Dropdown
+            ref={dropdownRef}
+            handleRemove={handleRemove}
+            handleClear={handleClear}
+        />
     ) : null;
 
     return (
@@ -50,7 +69,7 @@ const Header = () => {
                 borderRadius={"50%"}
                 url={photoURL}
             />
-            <Name name={displayName} lastSeen={getTimeSince(lastSeen)} />
+            <Name name={displayName} lastSeen={status} />
             <div className="header__setting">
                 <Button
                     onClick={toggleDropdown}

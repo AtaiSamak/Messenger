@@ -1,38 +1,37 @@
 import { useState, useEffect } from "react";
-import getFriends from "../firebase/database/getFriends";
-import addFriend from "../firebase/database/addFriend";
+import friendsListener from "../firebase/database/friendsListener";
+import updateFriend from "../firebase/database/updateFriend";
 import removeFriend from "../firebase/database/removeFriend";
+import removeListener from "../firebase/database/removeListener";
 
 const useFriends = (user) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const [listeners, setListeners] = useState(null);
 
     useEffect(() => {
         if (user) {
             (async () => {
-                const friends = await getFriends();
-                setLoading(false);
-                setData(friends);
+                setListeners(await friendsListener(setData));
+                console.log("useEffectFriends");
             })();
         }
     }, [user]);
 
-    const update = async (callback) => {
-        setLoading(true);
-        await callback();
-        setData(await getFriends());
-        setLoading(false);
+    useEffect(() => {
+        return () => {
+            if (listeners) removeListener(...listeners);
+        };
+    }, [listeners]);
+
+    const add = (phoneNumber) => {
+        updateFriend(phoneNumber);
     };
 
-    const add = async (phoneNumber) => {
-        update(async () => await addFriend(phoneNumber));
+    const remove = (phoneNumber) => {
+        removeFriend(phoneNumber);
     };
 
-    const remove = async (phoneNumber) => {
-        update(async () => await removeFriend(phoneNumber));
-    };
-
-    return { data, loading, add, remove };
+    return { data, add, remove };
 };
 
 export default useFriends;

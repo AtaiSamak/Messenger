@@ -1,35 +1,32 @@
 import React, { useState } from "react";
 import Chat from "../chat";
 import Auth from "../auth";
-import { MessageContext } from "../context";
 import useUser from "../../hooks/useUser";
 import useFriends from "../../hooks/useFriends";
 import useChat from "../../hooks/useChat";
 
 const App = () => {
-    const [user, updateUserData, handleSignOut] = useUser();
+    const user = useUser();
+    const friends = useFriends((user && user.data) || null);
     const [responder, setResponder] = useState(null);
-    const friends = useFriends(user);
 
-    const chatProps = useChat({ user, setResponder, friends: friends.data });
-    const { loading: chatLoading, sendMessage, chat, toggleChat } = chatProps;
+    const chat = useChat({
+        user: (user && user.data) || null,
+        setResponder,
+        friends: friends.data || null,
+    });
 
-    return (
-        <MessageContext.Provider
-            value={{
-                sendMessage,
-                toggleChat,
+    return user && user.data ? (
+        <Chat
+            contextValue={{
                 chat,
-                chatLoading,
                 user,
-                updateUserData,
-                handleSignOut,
                 friends,
                 responder,
             }}
-        >
-            {user ? <Chat /> : <Auth updateUserData={updateUserData} />}
-        </MessageContext.Provider>
+        />
+    ) : (
+        <Auth updateUserData={user.update} />
     );
 };
 

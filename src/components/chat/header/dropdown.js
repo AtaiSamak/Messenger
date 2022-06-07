@@ -13,7 +13,7 @@ const DropdownItem = ({ children, className, ...props }) => {
     );
 };
 
-const Dropdown = React.forwardRef(({ removeFriend }, ref) => (
+const Dropdown = React.forwardRef(({ handleRemove, handleClear }, ref) => (
     <div className="dropdown" ref={ref}>
         <DropdownItem>
             <FontAwesomeIcon
@@ -24,7 +24,7 @@ const Dropdown = React.forwardRef(({ removeFriend }, ref) => (
             />
             <span>View profile</span>
         </DropdownItem>
-        <DropdownItem>
+        <DropdownItem onClick={handleClear}>
             <FontAwesomeIcon
                 width={"14px"}
                 height={"14px"}
@@ -35,7 +35,7 @@ const Dropdown = React.forwardRef(({ removeFriend }, ref) => (
         </DropdownItem>
         <DropdownItem
             className="dropdown__item_red-text"
-            onClick={removeFriend}
+            onClick={handleRemove}
         >
             <FontAwesomeIcon
                 width={"14px"}

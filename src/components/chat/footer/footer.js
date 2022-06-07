@@ -13,9 +13,10 @@ const pickerStyle = {
 };
 
 const Footer = () => {
-    const { sendMessage } = useContext(MessageContext);
     const [inputValue, setInputValue] = useState("");
     const [pickerVisible, setPickerVisible] = useState(false);
+    const { chat } = useContext(MessageContext);
+    const { sendMessage } = chat;
 
     const onEmojiClick = (event, emojiObject) => {
         setInputValue(inputValue + emojiObject.emoji);

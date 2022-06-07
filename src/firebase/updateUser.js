@@ -1,5 +1,5 @@
 import { updateProfile } from "firebase/auth";
-import updateUserInDatabase from "./database/addUser";
+import updateUserInDatabase from "./database/updateUser";
 import { auth } from "./initApp";
 import uploadUserPhoto from "./uploadPhoto";
 

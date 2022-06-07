@@ -2,37 +2,36 @@ import { useState, useEffect } from "react";
 import { auth } from "../firebase/initApp";
 import signOutProfile from "../firebase/signOutProfile";
 import authStateListener from "../firebase/authStateListener";
-import updateUserInDatabase from "../firebase/database/addUser";
+import updateUserInDatabase from "../firebase/database/updateUser";
+import presenceListener from "../firebase/database/presenceListener";
 
 const useUser = () => {
-    const [user, setUser] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         const user = auth.currentUser;
-        user ? setUser(user) : authStateListener(setUser);
+        user ? setData(user) : authStateListener(setData);
+        console.log("useUserEffect");
     }, []);
 
-    const updateUser = () => {
-        setUser(auth.currentUser);
-    };
-
     useEffect(() => {
-        if (user) {
-            const intervalID = setInterval(() => {
-                updateUserInDatabase(user);
-            }, 5000);
+        if (data) updateUserInDatabase(data);
+        presenceListener();
+        console.log("useUserEffect2");
+    }, [data]);
 
-            return () => {
-                clearInterval(intervalID);
-            };
-        }
-    }, [user]);
-
-    const handleSignOut = async () => {
-        if (await signOutProfile()) setUser(null);
+    const update = () => {
+        setData(auth.currentUser);
     };
 
-    return [user, updateUser, handleSignOut];
+    const signout = async () => {
+        if (await signOutProfile()) {
+            localStorage.clear();
+            setData(null);
+        }
+    };
+
+    return { data, update, signout };
 };
 
 export default useUser;

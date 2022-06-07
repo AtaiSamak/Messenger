@@ -1,36 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getConvertedMessages from "../helpers/getConvertedMessages";
-import setMessage from "../firebase/database/setMessage";
-import getActiveFriend from "../helpers/getActiveFriend";
-import getChat from "../firebase/database/getChat";
+import sendMessageToDB from "../firebase/database/sendMessageToDB";
+import chatListener from "../firebase/database/chatListener";
+import removeChatHistory from "../firebase/database/removeChatHistory";
+import markAsRead from "../firebase/database/markAsRead";
+import removeListener from "../firebase/database/removeListener";
+import userListener from "../firebase/database/userListener";
 
 const useChat = ({ user, setResponder, friends }) => {
-    const [loading, setLoading] = useState(false);
-    const [chat, setChat] = useState(null);
+    const [data, setData] = useState(null);
+    const [listener, setListener] = useState(null);
+    const [respListener, setRespListener] = useState(null);
+
+    useEffect(() => {
+        if (data && user) markAsRead(data, user.phoneNumber);
+    }, [data, user]);
 
     const sendMessage = (text) => {
         const messages = getConvertedMessages({
             user,
             text,
-            messages: chat.messages,
+            messages: data.messages,
         });
-        setMessage(chat.id, messages);
-        setChat({
-            ...chat,
-            messages,
-        });
+        sendMessageToDB(data.id, messages);
+        setData({ ...data, messages });
     };
 
-    const toggleChat = async (phoneNumber) => {
+    const toggle = async (phoneNumber) => {
+        if (listener) removeListener(listener);
+        if (respListener) removeListener(respListener);
         if (phoneNumber) {
-            setResponder(getActiveFriend(friends, phoneNumber));
-            setLoading(true);
-            await getChat(phoneNumber, setChat);
-            setLoading(false);
-        } else setChat(null);
+            setRespListener(
+                userListener(phoneNumber, (data) => {
+                    setResponder(data);
+                })
+            );
+            setListener(await chatListener(phoneNumber, setData));
+        } else setData(null);
     };
 
-    return { loading, sendMessage, chat, toggleChat };
+    const clearHistory = () => {
+        removeChatHistory(data.id);
+    };
+
+    return { data, sendMessage, toggle, clearHistory };
 };
 
 export default useChat;

@@ -4,7 +4,10 @@ import { MessageContext } from "../../context";
 
 const UserInfo = () => {
     const { user } = useContext(MessageContext);
-    const { displayName, phoneNumber, photoURL } = user;
+    const displayName = user.data && user.data.displayName;
+    const phoneNumber = user.data && user.data.phoneNumber;
+    const photoURL = user.data && user.data.photoURL;
+
     return (
         <div className="user-info">
             <Img

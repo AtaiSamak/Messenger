@@ -6,7 +6,7 @@ import { RoundSpinner } from "../../common";
 
 const Body = () => {
     const chatEndRef = React.createRef();
-    const { chatLoading } = useContext(MessageContext);
+    const { chat } = useContext(MessageContext);
 
     useEffect(() => {
         scrollToBottom();
@@ -18,7 +18,7 @@ const Body = () => {
 
     return (
         <div className="body" ref={chatEndRef}>
-            {chatLoading ? <RoundSpinner color="#b0b0b0" /> : <Messages />}
+            {chat ? <Messages /> : <RoundSpinner color="#b0b0b0" />}
         </div>
     );
 };

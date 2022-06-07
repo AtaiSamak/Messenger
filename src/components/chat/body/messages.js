@@ -4,10 +4,12 @@ import UserMessage from "./userMessage";
 import ResponderMessage from "./responderMessage";
 import getFormattedTime from "../../../helpers/getFormattedTime";
 import Greeting from "../greeting";
+import getDividedDisplayName from "../../../helpers/getDividedDisplayName";
 
 const Messages = () => {
-    const { chat, user } = useContext(MessageContext);
-    const { messages } = chat;
+    const { chat, user, responder } = useContext(MessageContext);
+    const { messages } = chat.data;
+    const [firstName] = getDividedDisplayName(responder.displayName);
 
     const userItem = ({ text, time, isRead }) => (
         <UserMessage
@@ -20,10 +22,8 @@ const Messages = () => {
 
     const responderItem = ({ text, time }) => (
         <ResponderMessage
-            name={"Alex"}
-            imageSRC={
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIASQXsdCNW79UDekq1er9CWhYlt6xCDNYPg&usqp=CAU"
-            }
+            name={firstName}
+            imageSRC={responder.photoURL}
             message={text}
             time={getFormattedTime(time)}
             key={time}
@@ -32,7 +32,7 @@ const Messages = () => {
 
     return messages ? (
         messages.map((message) =>
-            message.user === user.phoneNumber
+            message.user === (user.data && user.data.phoneNumber)
                 ? userItem(message)
                 : responderItem(message)
         )

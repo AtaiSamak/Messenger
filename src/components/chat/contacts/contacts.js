@@ -8,6 +8,7 @@ import useModal from "../../../hooks/useModal";
 import "./contacts.scss";
 import ContactList from "./contactList";
 import { MessageContext } from "../../context";
+import ErrorBoundary from "../../common/errorBoundary/errorBoundary";
 
 const Contacts = React.forwardRef(({ setMenu }, { barsRef }) => {
     const [inputValue, setInputValue] = useState("");
@@ -39,7 +40,12 @@ const Contacts = React.forwardRef(({ setMenu }, { barsRef }) => {
                 <SearchInput value={inputValue} handleChange={onChangeInput} />
             </div>
             <div className="contacts__body">
-                <ContactList inputValue={inputValue} friends={friends} />
+                <ErrorBoundary>
+                    <ContactList
+                        inputValue={inputValue}
+                        friends={friends.data || null}
+                    />
+                </ErrorBoundary>
             </div>
             <div className="contacts__add-button" onClick={openModal}>
                 <button type="button">Add contact</button>

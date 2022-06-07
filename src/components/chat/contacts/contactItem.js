@@ -8,7 +8,7 @@ const ContactItem = ({
     displayName,
     phototURL = userDefaultPoto,
 }) => {
-    const { toggleChat, responder } = useContext(MessageContext);
+    const { chat, responder } = useContext(MessageContext);
 
     const isChoosenResponder =
         responder && responder.phoneNumber === phoneNumber
@@ -16,7 +16,8 @@ const ContactItem = ({
             : "";
 
     const handleClick = () => {
-        toggleChat(phoneNumber);
+        if (responder && phoneNumber === responder.phoneNumber) return;
+        chat.toggle(phoneNumber);
     };
 
     return (
