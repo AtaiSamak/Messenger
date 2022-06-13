@@ -11,13 +11,13 @@ const useUser = () => {
     useEffect(() => {
         const user = auth.currentUser;
         user ? setData(user) : authStateListener(setData);
-        console.log("useUserEffect");
+        console.log("get user or set listner");
     }, []);
 
     useEffect(() => {
         if (data) updateUserInDatabase(data);
         presenceListener();
-        console.log("useUserEffect2");
+        console.log("update user");
     }, [data]);
 
     const update = () => {

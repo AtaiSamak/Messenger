@@ -4,12 +4,10 @@ import UserMessage from "./userMessage";
 import ResponderMessage from "./responderMessage";
 import getFormattedTime from "../../../helpers/getFormattedTime";
 import Greeting from "../greeting";
-import getDividedDisplayName from "../../../helpers/getDividedDisplayName";
 
 const Messages = () => {
     const { chat, user, responder } = useContext(MessageContext);
     const { messages } = chat.data;
-    const [firstName] = getDividedDisplayName(responder.displayName);
 
     const userItem = ({ text, time, isRead }) => (
         <UserMessage
@@ -22,7 +20,7 @@ const Messages = () => {
 
     const responderItem = ({ text, time }) => (
         <ResponderMessage
-            name={firstName}
+            name={responder.displayName}
             imageSRC={responder.photoURL}
             message={text}
             time={getFormattedTime(time)}

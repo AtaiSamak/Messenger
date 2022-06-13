@@ -11,9 +11,15 @@ import { Modal } from "../common";
 import UserSetting from "./userSetting";
 import "./chat.scss";
 import useModal from "../../hooks/useModal";
+import useFriends from "../../hooks/useFriends";
+import useChat from "../../hooks/useChat";
 
-const Chat = ({ contextValue }) => {
-    const { chat, user } = contextValue;
+const Chat = ({ user }) => {
+    const friends = useFriends((user && user.data) || null);
+    const { responder, ...chat } = useChat({
+        user: (user && user.data) || null,
+        friends: friends.data || null,
+    });
     const [menu, setMenu] = useState(false);
     const [modalVisible, openModal, closeModal] = useModal(() => {
         setMenu(false);
@@ -26,7 +32,7 @@ const Chat = ({ contextValue }) => {
     });
 
     return (
-        <MessageContext.Provider value={contextValue}>
+        <MessageContext.Provider value={{ chat, user, friends, responder }}>
             <div className="chat">
                 <Menu
                     active={menu}

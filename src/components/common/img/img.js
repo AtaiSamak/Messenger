@@ -1,4 +1,4 @@
-const Img = ({ width, height, borderRadius = 0, url, ...props }) => {
+const Img = ({ width, height, borderRadius = 0, url, style, ...props }) => {
     const styles = {
         width: width,
         height: height,
@@ -7,6 +7,7 @@ const Img = ({ width, height, borderRadius = 0, url, ...props }) => {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        ...style,
     };
 
     return (

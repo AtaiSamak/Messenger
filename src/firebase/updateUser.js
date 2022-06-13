@@ -4,10 +4,10 @@ import { auth } from "./initApp";
 import uploadUserPhoto from "./uploadPhoto";
 
 const updateUser = {
-    displayName: async (firstName, lastName) => {
+    displayName: async (displayName) => {
         const user = auth.currentUser;
         return await updateProfile(user, {
-            displayName: `${firstName} ${lastName}`,
+            displayName: displayName,
         })
             .then(() => {
                 console.log("Profile updated");

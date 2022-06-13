@@ -6,10 +6,12 @@ import removeChatHistory from "../firebase/database/removeChatHistory";
 import markAsRead from "../firebase/database/markAsRead";
 import removeListener from "../firebase/database/removeListener";
 import userListener from "../firebase/database/userListener";
+import getActiveFriend from "../helpers/getActiveFriend";
 
-const useChat = ({ user, setResponder, friends }) => {
+const useChat = ({ user, friends }) => {
     const [data, setData] = useState(null);
     const [listener, setListener] = useState(null);
+    const [responder, setResponder] = useState(null);
     const [respListener, setRespListener] = useState(null);
 
     useEffect(() => {
@@ -27,6 +29,7 @@ const useChat = ({ user, setResponder, friends }) => {
     };
 
     const toggle = async (phoneNumber) => {
+        setResponder(getActiveFriend(friends, phoneNumber));
         if (listener) removeListener(listener);
         if (respListener) removeListener(respListener);
         if (phoneNumber) {
@@ -43,7 +46,7 @@ const useChat = ({ user, setResponder, friends }) => {
         removeChatHistory(data.id);
     };
 
-    return { data, sendMessage, toggle, clearHistory };
+    return { data, responder, sendMessage, toggle, clearHistory };
 };
 
 export default useChat;

@@ -10,11 +10,19 @@ const ContactList = ({ inputValue, friends }) => {
         if (friends) {
             const foundFriends = getFoundContacts(inputValue, friends);
             return foundFriends.map(
-                ({ displayName, phoneNumber, photoURL }) => (
+                ({
+                    displayName,
+                    phoneNumber,
+                    photoURL,
+                    lastMessage,
+                    connections = false,
+                }) => (
                     <ContactItem
                         displayName={displayName}
                         phoneNumber={phoneNumber}
                         phototURL={photoURL}
+                        lastMessage={lastMessage}
+                        isOnline={connections}
                         key={phoneNumber}
                     />
                 )

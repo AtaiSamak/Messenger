@@ -12,7 +12,7 @@ const useFriends = (user) => {
         if (user) {
             (async () => {
                 setListeners(await friendsListener(setData));
-                console.log("useEffectFriends");
+                console.log("set friend listeners");
             })();
         }
     }, [user]);

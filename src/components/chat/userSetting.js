@@ -2,7 +2,6 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import updateUser from "../../firebase/updateUser";
-import getDividedDisplayName from "../../helpers/getDividedDisplayName";
 import { Button, Img } from "../common";
 import { ModalInput } from "../common";
 import { MessageContext } from "../context";
@@ -10,26 +9,21 @@ import "./userSetting.scss";
 
 const UserSetting = ({ handleCancel }) => {
     const { user } = useContext(MessageContext);
-    const photoURL = user.data && user.data.photoURL;
-    const dName = getDividedDisplayName(user.data && user.data.displayName);
-    const [userPhoto, setUserPhoto] = useState(photoURL);
-    const [firstName, setFirstName] = useState(dName[0]);
-    const [lastName, setLastName] = useState(dName[1]);
+    const [userPhoto, setUserPhoto] = useState(user.data && user.data.photoURL);
+    const [displayName, setDisplayName] = useState(
+        user.data && user.data.displayName
+    );
 
     const handleChangePhoto = ({ target }) => {
         const [newPhoto] = target.files;
-        if (newPhoto) {
-            setUserPhoto(URL.createObjectURL(newPhoto));
-        }
+        if (newPhoto) setUserPhoto(URL.createObjectURL(newPhoto));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newUserPhoto = e.target.photo.files[0];
-        if (newUserPhoto) {
-            await updateUser.photoURL(newUserPhoto);
-        }
-        const update = await updateUser.displayName(firstName, lastName);
+        if (newUserPhoto) await updateUser.photoURL(newUserPhoto);
+        const update = await updateUser.displayName(displayName);
         if (newUserPhoto || update) {
             user.update();
             handleCancel();
@@ -50,22 +44,15 @@ const UserSetting = ({ handleCancel }) => {
                     accept=".png, .jpg, .jpeg"
                     name="photo"
                     onChange={handleChangePhoto}
-                ></input>
+                />
                 <FontAwesomeIcon icon={faCamera} />
             </div>
             <ModalInput
-                label="First name:"
-                value={firstName}
+                label="Display name: "
+                value={displayName}
                 name="firstName"
-                setValue={setFirstName}
-                pattern={/^[a-z]+$/i}
-            />
-            <ModalInput
-                label="Last name:"
-                value={lastName}
-                name="lastName"
-                setValue={setLastName}
-                pattern={/^[a-z]+$/i}
+                setValue={setDisplayName}
+                pattern={/^[\w\W]{1,50}$/i}
             />
             <div className="user-setting__footer">
                 <Button

@@ -135,6 +135,17 @@
         }
     }
 
+    &__status {
+        position: absolute;
+        min-width: 10px;
+        min-height: 10px;
+        background-color: #4cbb17;
+        bottom: 1%;
+        right: 1%;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
     &__content {
         padding-left: 10px;
     }

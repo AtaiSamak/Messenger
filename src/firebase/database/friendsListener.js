@@ -1,13 +1,7 @@
-import { get, off, onValue, ref, child } from "firebase/database";
+import { get, onValue, ref, child } from "firebase/database";
 import { auth, database } from "../initApp";
 import updateFriend from "./updateFriend";
 import userListener from "./userListener";
-
-const removeFriendListeners = (friendRefs) => {
-    for (let friendRef of friendRefs) {
-        off(friendRef);
-    }
-};
 
 const setFriendsListener = ({ friendPhones }) => {
     const friendRefs =
@@ -25,6 +19,7 @@ const setFrinedsDBListener = ({ phoneNumber, setFriends }) => {
     onValue(friendsDBRef, (snapshot) => {
         const data = snapshot.val();
         setFriends(Object.values(data));
+        console.log("Update friend value");
     });
     return [friendsDBRef];
 };
@@ -52,4 +47,3 @@ const friendsListener = async (setFriends) => {
 };
 
 export default friendsListener;
-export { removeFriendListeners };
