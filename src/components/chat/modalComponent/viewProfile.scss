@@ -1,0 +1,16 @@
+.view-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    &__section {
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
+        margin-top: 15px;
+        span {
+            color: #8e8c8c;
+        }
+    }
+    margin-bottom: 15px;
+}

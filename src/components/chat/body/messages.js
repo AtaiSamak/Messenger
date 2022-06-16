@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 import UserMessage from "./userMessage";
 import ResponderMessage from "./responderMessage";
 import getFormattedTime from "../../../helpers/getFormattedTime";
@@ -7,7 +7,7 @@ import Greeting from "../greeting";
 
 const Messages = () => {
     const { chat, user, responder } = useContext(MessageContext);
-    const { messages } = chat.data;
+    const messages = chat && chat.data && chat.data.messages;
 
     const userItem = ({ text, time, isRead }) => (
         <UserMessage

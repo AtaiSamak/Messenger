@@ -13,7 +13,7 @@
     font-size: 16px;
 
     left: 0;
-    animation-duration: 0.5s;
+    animation-duration: 0.4s;
     animation-name: open-menu;
 
     &.disable {
@@ -114,5 +114,41 @@
 
     to {
         left: -45%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+        left: -80%;
+        width: 80%;
+        left: 0;
+        animation-duration: 0.2s;
+        animation-name: open-menu-mobile;
+
+        &.disable {
+            left: -80%;
+            animation-duration: 0.2s;
+            animation-name: close-menu-mobile;
+        }
+    }
+
+    @keyframes open-menu-mobile {
+        from {
+            left: -80%;
+        }
+
+        to {
+            left: 0;
+        }
+    }
+
+    @keyframes close-menu-mobile {
+        from {
+            left: 0;
+        }
+
+        to {
+            left: -80%;
+        }
     }
 }

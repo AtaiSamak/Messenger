@@ -17,9 +17,11 @@ const setFriendsListener = ({ friendPhones }) => {
 const setFrinedsDBListener = ({ phoneNumber, setFriends }) => {
     const friendsDBRef = ref(database, `users/${phoneNumber}/friends`);
     onValue(friendsDBRef, (snapshot) => {
-        const data = snapshot.val();
-        setFriends(Object.values(data));
-        console.log("Update friend value");
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            setFriends(Object.values(data));
+            console.log("Update friend value");
+        } else setFriends([]);
     });
     return [friendsDBRef];
 };

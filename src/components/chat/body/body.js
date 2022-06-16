@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Messages from "./messages";
 import "./body.scss";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 import { RoundSpinner } from "../../common";
 
 const Body = () => {

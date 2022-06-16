@@ -35,6 +35,12 @@
         height: 100%;
         flex-direction: column;
     }
+
+    @media screen and (max-width: 768px) {
+        &__content {
+            max-width: 100%;
+        }
+    }
 }
 
 .greeting {

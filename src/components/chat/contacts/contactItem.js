@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Img } from "../../common";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 import userDefaultPoto from "../../../assets/userDefaultPhoto.png";
 import { Transition } from "react-transition-group";
+import { MobileContext } from "../mobile";
 
 const duration = 200;
 const defaultStyle = {
@@ -27,19 +28,24 @@ const ContactItem = ({
     lastMessage,
     isOnline,
 }) => {
-    const { chat, responder } = useContext(MessageContext);
+    const { chat, responder, isMobile } = useContext(MessageContext);
+    const mobileFunc = useContext(MobileContext);
 
     const isActive = responder && responder.phoneNumber === phoneNumber;
 
     const handleClick = () => {
-        if (responder && responder.phoneNumber === phoneNumber) return;
+        if (responder && responder.phoneNumber === phoneNumber && !isMobile)
+            return;
         chat.toggle(phoneNumber);
+        if (mobileFunc) mobileFunc.goToChat();
     };
 
     return (
         <div
             onClick={handleClick}
-            className={`contact-item ${isActive ? CLASSES.activeContact : ""}`}
+            className={`contact-item ${
+                isActive && !isMobile ? CLASSES.activeContact : ""
+            }`}
         >
             <div style={{ position: "relative" }}>
                 <Img

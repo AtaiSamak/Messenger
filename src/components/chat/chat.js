@@ -1,26 +1,42 @@
 import React, { useRef, useState } from "react";
-import Header from "./header";
-import Body from "./body";
-import Footer from "./footer";
-import Contacts from "./contacts";
-import { MessageContext } from "../context";
-import Greeting from "./greeting";
-import Menu from "./menu";
+import { MessageContext } from "../app/app";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { Modal } from "../common";
-import UserSetting from "./userSetting";
 import "./chat.scss";
 import useModal from "../../hooks/useModal";
 import useFriends from "../../hooks/useFriends";
 import useChat from "../../hooks/useChat";
+import Desktop from "./desktop";
+import Mobile from "./mobile";
+const Menu = React.lazy(() => import("./menu"));
+const ModalComponent = React.lazy(() =>
+    import("./modalComponent/modalComponent")
+);
 
-const Chat = ({ user }) => {
+const DEVICE_MAP = {
+    desktop: ({ setMenu, barsRef, handleOpenModal }) => (
+        <Desktop
+            setMenu={setMenu}
+            barsRef={barsRef}
+            handleOpen={handleOpenModal("view")}
+        />
+    ),
+    mobile: ({ setMenu, barsRef, handleOpenModal }) => (
+        <Mobile
+            setMenu={setMenu}
+            barsRef={barsRef}
+            handleOpen={handleOpenModal("view")}
+        />
+    ),
+};
+
+const Chat = ({ user, isMobile }) => {
     const friends = useFriends((user && user.data) || null);
     const { responder, ...chat } = useChat({
         user: (user && user.data) || null,
         friends: friends.data || null,
     });
     const [menu, setMenu] = useState(false);
+    const [modalType, setModalType] = useState("edit");
     const [modalVisible, openModal, closeModal] = useModal(() => {
         setMenu(false);
     });
@@ -31,34 +47,34 @@ const Chat = ({ user }) => {
         if (menu) setMenu(false);
     });
 
+    const handleOpenModal = (type) => () => {
+        setModalType(type);
+        openModal();
+    };
+
+    const Device = DEVICE_MAP[isMobile ? "mobile" : "desktop"];
+
     return (
-        <MessageContext.Provider value={{ chat, user, friends, responder }}>
+        <MessageContext.Provider
+            value={{ chat, user, friends, responder, isMobile }}
+        >
             <div className="chat">
                 <Menu
                     active={menu}
-                    openModal={openModal}
+                    openModal={handleOpenModal("edit")}
                     handleSignOut={user.signout}
                     ref={menuRef}
                 />
-                <Modal
+                <ModalComponent
                     isActive={modalVisible}
                     handleClose={closeModal}
-                    title={"Edit Profile"}
-                >
-                    <UserSetting handleCancel={closeModal}></UserSetting>
-                </Modal>
-                <Contacts setMenu={setMenu} ref={{ barsRef }} />
-                <div className="chat__content">
-                    {chat.data ? (
-                        <>
-                            <Header />
-                            <Body />
-                            <Footer />
-                        </>
-                    ) : (
-                        <Greeting>Select a chat to start messaging</Greeting>
-                    )}
-                </div>
+                    type={modalType}
+                />
+                <Device
+                    setMenu={setMenu}
+                    barsRef={barsRef}
+                    handleOpenModal={handleOpenModal}
+                />
             </div>
         </MessageContext.Provider>
     );

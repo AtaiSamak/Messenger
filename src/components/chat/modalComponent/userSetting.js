@@ -1,10 +1,10 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
-import updateUser from "../../firebase/updateUser";
-import { Button, Img } from "../common";
-import { ModalInput } from "../common";
-import { MessageContext } from "../context";
+import updateUser from "../../../firebase/updateUser";
+import { Button, Img } from "../../common";
+import { ModalInput } from "../../common";
+import { MessageContext } from "../../app/app";
 import "./userSetting.scss";
 
 const UserSetting = ({ handleCancel }) => {

@@ -7,7 +7,7 @@ import { Modal } from "../../common";
 import useModal from "../../../hooks/useModal";
 import "./contacts.scss";
 import ContactList from "./contactList";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 import ErrorBoundary from "../../common/errorBoundary/errorBoundary";
 
 const Contacts = React.forwardRef(({ setMenu }, { barsRef }) => {

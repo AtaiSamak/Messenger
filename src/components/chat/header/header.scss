@@ -5,6 +5,13 @@
     padding: 17px 16px 15px;
     border-bottom: 1px solid #f2f2f7;
 
+    &__arrow-left {
+        width: 36px;
+        height: 24px;
+        color: #8e8e93;
+        margin-right: 15px;
+    }
+
     &__photo {
         width: 36px;
         height: 36px;
@@ -71,6 +78,13 @@
 
     &__setting-button:hover svg {
         fill: #000;
+    }
+
+    @media screen and (max-width: 768px) {
+        &__data {
+            text-align: left;
+            margin-left: 10px;
+        }
     }
 }
 

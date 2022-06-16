@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 import { EmojiIcon, TelegramIcon, MentionIcon } from "../../../assets/svg";
 import { Button } from "../../common";
 import "./footer.scss";

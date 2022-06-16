@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Img } from "../../common";
-import { MessageContext } from "../../context";
+import { MessageContext } from "../../app/app";
 
 const UserInfo = () => {
     const { user } = useContext(MessageContext);
