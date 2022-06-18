@@ -1,3 +1,4 @@
+@import "../../../styles/darkThemeStyles.scss";
 .modal {
     position: absolute;
     top: 0;
@@ -77,5 +78,27 @@
     }
     to {
         background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+:root[data-theme="dark"] {
+    .modal {
+        &__main {
+            background: $dark;
+        }
+
+        &__title {
+            @include border(border-bottom, 1px);
+
+            button {
+                svg {
+                    color: #8e8e93;
+                }
+
+                &:hover svg {
+                    color: $blue;
+                }
+            }
+        }
     }
 }

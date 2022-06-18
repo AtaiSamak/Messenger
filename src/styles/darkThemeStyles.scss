@@ -1,0 +1,30 @@
+$blue: #4682b4;
+$dark-lighter: #334150;
+$dark: #1e2935;
+$darkest: #16161d;
+$dark-hover-color: #27333f;
+
+@mixin border($property, $size) {
+    #{$property}: $size solid #000;
+}
+
+@mixin font {
+    color: #fff;
+}
+
+@mixin modal-button-dark {
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: $blue;
+    & + & {
+        margin-left: 10px;
+    }
+
+    &:hover {
+        background-color: rgba(0, 115, 207, 0.1);
+    }
+}

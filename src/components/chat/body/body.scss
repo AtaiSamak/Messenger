@@ -1,8 +1,10 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .body {
     height: 100%;
     width: 100%;
     overflow-y: scroll;
-    padding: 16px 9px 0 16px;
+    padding: 16px 9px 0 10px;
 
     &::-webkit-scrollbar {
         width: 7px;
@@ -41,6 +43,9 @@
         position: absolute;
         top: 0;
         right: -7px;
+        svg {
+            fill: #007aff;
+        }
     }
 
     &__text {
@@ -74,6 +79,9 @@
         align-items: center;
         justify-content: center;
         margin-left: 4px;
+        svg path {
+            stroke: #81e299;
+        }
     }
 }
 
@@ -83,8 +91,10 @@
     max-width: 80%;
 
     &__image {
-        width: 36px;
-        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        max-width: 36px;
+        max-height: 36px;
         border-radius: 50%;
         overflow: hidden;
         display: flex;
@@ -112,6 +122,7 @@
         position: absolute;
         top: 0px;
         left: -7px;
+        fill: #f2f2f7;
     }
 
     &__name {
@@ -135,5 +146,61 @@
         color: #666668;
         width: fit-content;
         margin-left: auto;
+    }
+}
+
+:root[data-theme="dark"] {
+    .body {
+        background: $darkest;
+    }
+    .user-message {
+        background-color: $dark-lighter;
+
+        &__top-vector-tip {
+            svg {
+                fill: $dark-lighter;
+            }
+        }
+
+        &__time {
+            color: #c0c0c0;
+        }
+
+        &__check-mark {
+            svg path {
+                stroke: #89cff0;
+            }
+        }
+    }
+
+    .responder-message {
+        &__body {
+            background: $dark-lighter;
+        }
+
+        &__top-vector-tip {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 10px;
+            height: 12px;
+            position: absolute;
+            top: 0px;
+            left: -7px;
+            fill: $dark-lighter;
+        }
+
+        &__name {
+            color: #6699cc;
+            font-weight: 400;
+        }
+
+        &__text {
+            color: #fff;
+        }
+
+        &__time {
+            color: #c0c0c0;
+        }
     }
 }

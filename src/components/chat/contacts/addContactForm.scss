@@ -1,4 +1,5 @@
 @import "../../../styles/button.scss";
+@import "../../../styles/darkThemeStyles.scss";
 
 .add-contact {
     padding-top: 10px;
@@ -10,5 +11,11 @@
     }
     &__button {
         @include modal-button;
+    }
+}
+
+:root[data-theme="dark"] {
+    .add-contact__button {
+        @include modal-button-dark;
     }
 }

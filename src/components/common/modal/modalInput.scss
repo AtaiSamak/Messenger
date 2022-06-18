@@ -1,3 +1,5 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .modal-input {
     &__label {
         width: 100%;
@@ -56,5 +58,27 @@
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
+    }
+}
+
+:root[data-theme="dark"] {
+    .modal-input__input {
+        background: $dark;
+        color: #fff;
+    }
+    .modal-input__label {
+        span {
+            color: #8e8c8c;
+            transition: 0.1s color linear;
+        }
+        &::after {
+            background: $blue;
+        }
+
+        &_active {
+            span {
+                color: $blue;
+            }
+        }
     }
 }

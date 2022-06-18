@@ -15,6 +15,7 @@ const UserInfo = () => {
                 height={"56px"}
                 borderRadius={"50%"}
                 url={photoURL}
+                style={{ minWidth: "56px", maxWidth: "56px" }}
             ></Img>
             <div className="user-info__data">
                 <div className="user-info__name">

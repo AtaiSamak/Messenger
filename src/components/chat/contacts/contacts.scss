@@ -1,3 +1,5 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .contacts {
     display: flex;
     flex-direction: column;
@@ -170,5 +172,41 @@
         white-space: nowrap;
         overflow: hidden;
         width: 120px; // some width
+    }
+}
+:root[data-theme="dark"] {
+    .contacts {
+        @include border(border-right, 1px);
+        @include font;
+        background: $dark;
+        &__add-button {
+            @include border(border-top, 1px);
+            background: $dark;
+            button {
+                background: $dark-lighter;
+                &:hover {
+                    background-color: $blue;
+                }
+            }
+        }
+    }
+
+    .search-input {
+        background: $dark-lighter;
+        color: #fff;
+    }
+
+    .contact-item {
+        &:hover {
+            background: $dark-hover-color;
+        }
+
+        &_active {
+            background: $blue;
+            color: #fff;
+            &:hover {
+                background: $blue;
+            }
+        }
     }
 }

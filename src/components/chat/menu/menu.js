@@ -1,14 +1,12 @@
 import React from "react";
 import UserInfo from "./userInfo";
 import MenuItem from "./menuItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
-    faMoon,
     faRightFromBracket as faLogout,
-    faToggleOff,
 } from "@fortawesome/free-solid-svg-icons";
 import useExpire from "../../../hooks/useExpire";
+import Toggle from "./toggle";
 import "./menu.scss";
 
 const Menu = React.forwardRef(({ active, openModal, handleSignOut }, ref) => {
@@ -26,29 +24,7 @@ const Menu = React.forwardRef(({ active, openModal, handleSignOut }, ref) => {
                         icon={faUser}
                         label={"Edit profile"}
                     />
-                    <MenuItem
-                        color={"#6a5acd"}
-                        icon={faMoon}
-                        label={"Night mode"}
-                    >
-                        <div
-                            className="menu__toggle-button"
-                            style={{
-                                flexGrow: "1",
-                                display: "flex",
-                                justifyContent: "right",
-                            }}
-                        >
-                            <FontAwesomeIcon
-                                icon={faToggleOff}
-                                color="#8e8e93"
-                                style={{
-                                    width: "28px",
-                                    height: "28px",
-                                }}
-                            />
-                        </div>
-                    </MenuItem>
+                    <Toggle />
                     <MenuItem
                         onClick={handleSignOut}
                         color={"#c54b8c"}

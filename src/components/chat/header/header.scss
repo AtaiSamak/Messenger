@@ -1,3 +1,5 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -120,6 +122,47 @@
         }
         &_red-text {
             color: #ff355e;
+        }
+    }
+}
+
+:root[data-theme="dark"] {
+    .header {
+        @include border(border-bottom, 1px);
+        background: $dark;
+        color: #fff;
+
+        &__name {
+            color: #fff;
+        }
+
+        &__status {
+            color: #a4a4a5;
+            &_online {
+                color: $blue;
+            }
+        }
+        &__setting-button {
+            &.active {
+                background-color: $dark-hover-color;
+                svg {
+                    fill: $blue;
+                }
+            }
+        }
+
+        &__setting-button:hover svg {
+            fill: $blue;
+        }
+    }
+
+    .dropdown {
+        background: $dark-lighter;
+        &__item {
+            color: #fff;
+            &:hover {
+                background-color: $dark-hover-color;
+            }
         }
     }
 }

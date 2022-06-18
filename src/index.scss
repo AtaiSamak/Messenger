@@ -25,3 +25,9 @@ p {
     height: 100%;
     width: auto;
 }
+
+:root[data-theme="dark"] {
+    body {
+        background-color: #282c35;
+    }
+}

@@ -3,15 +3,20 @@ import Chat from "../chat";
 import Auth from "../auth";
 import useUser from "../../hooks/useUser";
 import useMobile from "../../hooks/useMobile";
+import ThemeProvider from "../providers/themeProvider";
 
 const App = () => {
     const user = useUser();
     const isMobile = useMobile();
 
-    return user && user.data ? (
-        <Chat user={user} isMobile={isMobile} />
-    ) : (
-        <Auth updateUserData={user.update} />
+    return (
+        <ThemeProvider>
+            {user && user.data ? (
+                <Chat user={user} isMobile={isMobile} />
+            ) : (
+                <Auth updateUserData={user.update} />
+            )}
+        </ThemeProvider>
     );
 };
 

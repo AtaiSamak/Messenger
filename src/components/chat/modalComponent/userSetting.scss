@@ -1,5 +1,5 @@
 @import "../../../styles/button.scss";
-
+@import "../../../styles/darkThemeStyles.scss";
 .user-setting {
     width: 100%;
     display: flex;
@@ -55,5 +55,11 @@
             z-index: 10;
             border-radius: 50%;
         }
+    }
+}
+
+:root[data-theme="dark"] {
+    .user-setting__button {
+        @include modal-button-dark;
     }
 }

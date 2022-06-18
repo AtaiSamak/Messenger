@@ -1,3 +1,5 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .menu {
     display: flex;
     flex-wrap: wrap;
@@ -61,6 +63,10 @@
     &__data {
         font-size: 16px;
         margin-left: 20px;
+    }
+
+    &__name {
+        word-break: break-all;
     }
 
     &__phone-number {
@@ -150,5 +156,19 @@
         to {
             left: -80%;
         }
+    }
+}
+
+:root[data-theme="dark"] {
+    .menu {
+        background: $dark;
+        @include font;
+    }
+    .menu-item:hover {
+        background-color: $dark-hover-color;
+    }
+
+    .user-info {
+        @include border(border-bottom, 2px);
     }
 }

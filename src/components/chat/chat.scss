@@ -1,3 +1,5 @@
+@import "../../styles/darkThemeStyles.scss";
+
 .chat {
     overflow: hidden;
     position: fixed;
@@ -74,5 +76,19 @@
 
     to {
         background: rgba(0, 0, 0, 0);
+    }
+}
+
+:root[data-theme="dark"] {
+    .chat {
+        background: $darkest;
+    }
+    .greeting {
+        background: $dark;
+
+        &__text {
+            background-color: $dark-lighter;
+            color: #fff;
+        }
     }
 }

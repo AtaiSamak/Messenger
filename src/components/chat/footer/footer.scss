@@ -1,3 +1,5 @@
+@import "../../../styles/darkThemeStyles.scss";
+
 .footer {
     position: relative;
     z-index: 1000;
@@ -68,5 +70,45 @@
         border-radius: 7px;
         border: 2px solid transparent;
         background-clip: content-box;
+    }
+}
+
+:root[data-theme="dark"] {
+    .emoji-picker-react {
+        background: $dark;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+    }
+    .emoji-search {
+        background-color: $dark-lighter;
+        border: 1px solid $dark-lighter;
+        color: #fff;
+        &:focus {
+            border: 1px solid $blue;
+        }
+    }
+    .emoji-group::before {
+        background: rgba(70, 130, 180, 0.7);
+        color: #fff;
+        padding-right: 0;
+    }
+    .footer {
+        background: $dark;
+        @include border(border-top, 1px);
+        &__button {
+            &:hover svg {
+                fill: $blue;
+            }
+
+            &.active svg {
+                fill: $blue;
+            }
+        }
+
+        &__input {
+            color: #fff;
+            background: $dark;
+        }
     }
 }
