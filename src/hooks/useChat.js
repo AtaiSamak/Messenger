@@ -29,6 +29,7 @@ const useChat = ({ user, friends }) => {
     };
 
     const toggle = async (phoneNumber) => {
+        setData(null);
         setResponder(getActiveFriend(friends, phoneNumber));
         if (listener) removeListener(listener);
         if (respListener) removeListener(respListener);
@@ -39,7 +40,7 @@ const useChat = ({ user, friends }) => {
                 })
             );
             setListener(await chatListener(phoneNumber, setData));
-        } else setData(null);
+        }
     };
 
     const clearHistory = () => {

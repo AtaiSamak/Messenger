@@ -10,8 +10,7 @@ const sendCode = async (phoneNumber) => {
             return true;
         })
         .catch((error) => {
-            console.error(error);
-            return false;
+            throw Error(`Error: ${error}`);
         });
 };
 

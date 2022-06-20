@@ -8,7 +8,7 @@ const setFriendsListener = ({ friendPhones }) => {
         friendPhones &&
         friendPhones.map((phone) => {
             return userListener(phone, (data) => {
-                if (data) updateFriend(phone);
+                updateFriend(phone);
             });
         });
     return friendRefs;

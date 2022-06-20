@@ -24,7 +24,7 @@ const useFriends = (user) => {
     }, [listeners]);
 
     const add = (phoneNumber) => {
-        updateFriend(phoneNumber);
+        updateFriend(phoneNumber).catch((error) => alert(error));
     };
 
     const remove = (phoneNumber) => {

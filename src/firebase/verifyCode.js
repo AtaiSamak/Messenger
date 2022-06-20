@@ -5,8 +5,7 @@ const verifyCode = async (code) => {
             return result.user;
         })
         .catch((error) => {
-            console.error(error);
-            return null;
+            throw Error(error);
         });
 };
 

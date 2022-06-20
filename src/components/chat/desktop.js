@@ -4,15 +4,15 @@ import Contacts from "./contacts";
 import Header from "./header";
 import Footer from "./footer";
 import Greeting from "./greeting";
-const Body = React.lazy(() => import("./body"));
+import Body from "./body";
 
 const Desktop = ({ setMenu, barsRef, handleOpen }) => {
-    const { chat } = useContext(MessageContext);
+    const { responder } = useContext(MessageContext);
     return (
         <>
             <Contacts setMenu={setMenu} ref={{ barsRef }} />
             <div className="chat__content">
-                {chat.data ? (
+                {responder ? (
                     <>
                         <Header openModal={handleOpen} />
                         <Body />

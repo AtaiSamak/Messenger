@@ -18,7 +18,7 @@ const Body = () => {
 
     return (
         <div className="body" ref={chatEndRef}>
-            {chat ? <Messages /> : <RoundSpinner color="#b0b0b0" />}
+            {chat.data ? <Messages /> : <RoundSpinner color="#b0b0b0" />}
         </div>
     );
 };

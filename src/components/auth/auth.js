@@ -9,85 +9,74 @@ import verifyCode from "../../firebase/verifyCode";
 import sendCode from "../../firebase/sendCode";
 import { RoundSpinner } from "../common";
 
+const INPUT_MAP = {
+    phone: ({ handleInput, value, error }) => (
+        <Input
+            onChange={handleInput}
+            value={value}
+            placeholder={"Phone" + (error ? " is incorrect" : "")}
+            type={"tel"}
+            name={"phone"}
+            className={error ? "invalid" : ""}
+        />
+    ),
+    code: ({ handleInput, value, error }) => (
+        <Input
+            onChange={handleInput}
+            value={value}
+            placeholder={"Code" + (error ? " is incorrect" : "")}
+            type={"text"}
+            name={"code"}
+            className={error ? "invalid" : ""}
+        />
+    ),
+};
+
 const Auth = ({ updateUserData }) => {
-    const [state, setState] = useState({
-        isCodeField: false,
-        buttonText: "Send code",
-        inputValue: "",
-        invalidCode: false,
-    });
+    const [value, setValue] = useState("");
+    const [field, setField] = useState("phone");
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { isCodeField, buttonText, inputValue, invalidCode } = state;
     const buttonRef = useRef();
 
     useEffect(() => {
         recaptcha(buttonRef);
     }, []);
 
-    const setVerifyCodeState = () => {
-        setState({
-            isCodeField: true,
-            buttonText: "Verify",
-            inputValue: "",
-            invalidCode: false,
-        });
-    };
-
-    const setInvalidCodeState = () => {
-        setState({
-            isCodeField: true,
-            buttonText: "Verify",
-            inputValue: "",
-            invalidCode: true,
-        });
+    const handleError = () => {
+        setLoading(false);
+        setError(true);
+        setValue("");
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if (isCodeField === true) {
-            const user = await verifyCode(inputValue);
-            if (user) updateUserData();
-            setLoading(false);
-            setInvalidCodeState();
+        if (field === "code") {
+            verifyCode(value)
+                .then(() => updateUserData())
+                .catch(() => {
+                    handleError();
+                });
             return;
         }
-        if (await sendCode(inputValue)) {
-            setLoading(false);
-            setVerifyCodeState();
-        }
+        sendCode(value)
+            .then(() => {
+                setLoading(false);
+                setValue("");
+                setField("code");
+            })
+            .catch(() => {
+                handleError();
+            });
     };
 
-    const handleInput = (e) => {
-        const { value } = e.target;
-
-        setState({
-            ...state,
-            inputValue: value,
-            invalidCode: false,
-        });
+    const handleInput = ({ target }) => {
+        setValue(target.value);
+        setError(false);
     };
 
-    const phoneField = (
-        <Input
-            onChange={handleInput}
-            value={inputValue}
-            placeholder={"Phone"}
-            type={"tel"}
-            name={"phone"}
-        />
-    );
-
-    const codeField = (
-        <Input
-            onChange={handleInput}
-            value={inputValue}
-            placeholder={"Code" + (invalidCode ? " is incorrect" : "")}
-            type={"text"}
-            name={"code"}
-            className={invalidCode ? "invalid" : ""}
-        />
-    );
+    const Input = INPUT_MAP[field];
 
     return (
         <div className="container auth">
@@ -103,11 +92,15 @@ const Auth = ({ updateUserData }) => {
                     {loading ? (
                         <RoundSpinner />
                     ) : (
-                        <>{isCodeField ? codeField : phoneField}</>
+                        <Input
+                            handleInput={handleInput}
+                            value={value}
+                            error={error}
+                        />
                     )}
                     <div className="button-container">
                         <Button handleClick={handleClick} ref={buttonRef}>
-                            {buttonText}
+                            {field === "phone" ? "Send code" : "Verify"}
                         </Button>
                     </div>
                 </form>
