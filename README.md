@@ -1,92 +1,57 @@
-## Installation & Usage
+## Содержание
+- [Установка и использование](#установка-и-использование)
+- [Введение](#введение)
+- [Описание проекта](#описание-проекта)
+- [Стек технологий](#стек-технологий)
+- [Навыки которые я приобрел](#навыки-которые-я-приобрел)
+- [Заключение](#заключение)
 
-#### 1. Download/Clone this repo
+## Установка и использование
+
+#### 1. Скачать
 
 ```
 git clone https://github.com/AtaiSamak/Messenger.git
 ```
 
-#### 2. `cd` into the root directory and run `npm install`
+#### 2. `cd` для перехода в нужную директорию и установка зависимостей `npm install`
 
 ```
 cd .\Messenger\
 npm install
 ```
 
-Downloads a package and it's dependencies.
-
-#### 3. Start in the development mode
+#### 3. Запустить в режиме разработчика
 
 ```
 npm start
 ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Открываем [http://localhost:3000](http://localhost:3000) чтобы посмотреть приложение в браузере.
 
+## Введение
 
-## Custom firebase realtime database methods
- - [updateUserInDatabase(user)](#updateUserInDatabase)
- - [addFriend(friendPhoneNumber)](#addFriend)
- - [getChat(friendPhoneNumber, setChat)](#getChat)
- - [getChatID(friendPhoneNumber)](#getChatID)
- - [getFriends()](#getFriends)
- - [getUserFromDB(phoneNumber)](#getUserFromDB)
- - [removeFriend(friendPhoneNumber)](#removeFriend)
- - [setChat(chatID, friendPhoneNumber)](#setChat)
- - [setMessage(chatID, message)](#setMessage)
+Привет, меня зовут Атай! Я React Frontend разработчик, на данный момент обучаюсь в ВУЗе по направлению "информационные системы и технологии". Но увы тут очень мало практики и я решил сделать этот pet-проект, чтобы научиться работать с теми технологиями, которые мне понадобятся в работе. Это мой первый проект который я сделал(но еще много всего можно реализовать), пока что я реализовал только основную функциональность. Мне давно было интересно как работает чат, мессенджер и я считаю что я понял основную концепцию реализации таких приложений. Считаю что делая этот проект, научился тому, чему хотел научиться в начале работы.
 
-#### `updateUserInDatabase`
-Updates user data in realtime database along the path `users/${user.phoneNumber}/info`.<br>
-Argument `user` - object from which we are retrieving `uid, phoneNumber, displayName, photoURL, metadata`.<br>
-Return value: `undefined`<br>
-Path `users/${user.phoneNumber}/info` contains: `uid, displayName, photoURL, lastSeen`
+## Описание проекта
 
-#### `addFriend`
-Adds new friend in realtime database along the path `users/${phoneNumber}/friends/${friendPhoneNumber}`<br>
-Argument `friendPhoneNumber` - phone number<br>
-Return value: `undefined`<br>
-Path `users/${phoneNumber}/friends/${friendPhoneNumber}` contains: `uid, phoneNumber, displayName, photoURL, lastSeen`<br>
+Проект сделан по подобию таких приложений как WhatsApp, Telegram. При открытии веб-приложения мы видим поле для ввода телефона(вне зависимости от того, есть ли у пользователя аккаунт или нет, т.е. нет две формы для входя и для регистрации, как во многих сайтах). Дальше мы вводим код из смс, чтобы войти в наше приложение(есть реализация ошибок, например: неправильный номер или код из смс не совпадает). После открытия мы видим список с контактами, сам чат, бургер для открытия меню, где располагаются кнопки настройки, изменения темы(темный, светлый), также выход из аккаунта.
 
-#### `getChat`
-Get data from `chats/${chatID}`<br>
-Arguments `friendPhoneNumber` - phone number, `updateChat` - state updater<br>
-Return value: `false` - if error or `true` if data is received <br>
-Path `chats/${chatID}` contains: `{firstUser: phoneNumber, secondUser: phoneNumber, messages: []}`<br>
+## Стек технологий
 
-#### `getChatID`
-Generate or get an id for a chat<br>
-Argument `friendPhoneNumber` - phone number<br>
-Return value: `String` - chat id<br>
+- React
+- JavaScript
+- SASS
+- Firebase
+- Emoji-picker-react, react-font-awesome
 
-#### `getFriends`
-Gets friends from the database path `users/${phoneNumber}/friends`<br>
-Not arguments<br>
-Return value: `Array` - contains friends info<br> 
+## Навыки которые я приобрел
 
-#### `getUserFromDB`
-Gets user info from the database path `users/${phoneNumber}/info`<br>
-Argument `phoneNumber` - phone number<br>
-Return value: `Object` - user info<br>
-Path `users/${phoneNumber}/info` contains: `displayName, lastSeen, photoURL, uid`<br>
+- **React** - в основном использовал функциональные компоненты, т.к. считаю что у него больше преимуществ чем в классовых компонентах. Понял как работает сам react, props, state, context, useEffect, useMemo, useCallback, ErrorBoundary, научился создавать пользовательские хуки и многое другое.
+- **Firebase** - мне нужно было готовое решение для backend части моего приложения и я нашел замечательную платформу как [Firebase](https://firebase.google.com/). С помощью него я создал авторизацию, хранение данных в realtime-database(для хранения сообщений, статусы пользователей и данные которые часто меняются), storage для хранения фотографий пользователей.
+- **Async/await** - понял как работает эта технология на примере, зачем они вообще нужны, что такое объект Promise. Научился обрабатывать ответы, исключения.
 
-#### `removeFriend`
-Remove data from the database path `users/${phoneNumber}/friends/${friendPhone}`<br>
-Argument `friendPhoneNumber` - phone number<br>
-Return value: `undefined`<br>
-Path `users/${phoneNumber}/friends/${friendPhoneNumber}` contains: `uid, phoneNumber, displayName, photoURL, lastSeen`<br>
+## Заключение
 
-#### `setChat`
-Create new chat on the path `chats/${chatID}`<br>
-Arguments `chatID` - [getChatID](#getChatID), `friendPhoneNumber` - phone number <br>
-Return value: `undefined`<br>
-Path `chats/${chatID}` contains: `{firstUser: phoneNumber, secondUser: phoneNumber, messages: []}`<br>
-
-#### `setMessage`
-Sets new message array on the path `chats/${chatID}/messages`<br>
-Arguments `chatID` - [getChatID](#getChatID), `message` - messages array<br>
-Return value: `undefined`<br>
-Path `chats/${chatID}/messages` contains: array of message objects<br>
-
-
+Буду продолжать развивать этот pet-проект т.к. есть еще много недостающей функциональности. И считаю что делая этот проект я понял очень многое для себя - как лучше писать компоненты, как структурировать данные, как разделять код и как писать чистый, понятный для других разработчиков код. Пока проект очень сырой и у него есть очень много недостатков, думаю что в будущем узнавая лучшие реализации той или иной функциональности, буду переделывать этот проект. На данное время при написании этого описания, я вижу небольшие недостатки моего проекта может и есть большие, но пока я их не вижу.
 
